@@ -88,8 +88,9 @@ void displayZero(){
 ### Shift Registers 
 
 So you've probably noticed now that you have had a play with the display that it uses a lot of pins to control it. In fact, it uses 12 of the 14 available digital pins on your Arduino Uno. Realistically you have two choices if you want to continue adding in sensors to your project: 
-* Upgrade your Arduino Uno board to a board with a larger amount of pin mounts, such as the Arduino Mega. 
-* Introduce a shift register into the circuit
+
+1. Upgrade your Arduino Uno board to a board with a larger amount of pin mounts, such as the Arduino Mega. 
+2. Introduce a shift register into the circuit
 
 Why choosing a shift register is more appropriate in this project
 
