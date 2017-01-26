@@ -56,10 +56,13 @@ void setup() {
 To get this ball rolling, we are first going to start by making our display show four 0's on screen. To do this, we need to put the following code in the control loop. 
 
 ```c++
+    // Turns the pins that you want to display a number on
     digitalWrite(firstDigit, HIGH);
     digitalWrite(secondDigit, HIGH);
     digitalWrite(thirdDigit, HIGH);
     digitalWrite(fourthDigit, HIGH);
+    
+    // Form the number 0 on every digit pin that is set to High
     digitalWrite(A, LOW);
     digitalWrite(B, LOW);
     digitalWrite(C, LOW);
@@ -72,9 +75,15 @@ To get this ball rolling, we are first going to start by making our display show
 ```
 What this code does is ... 
 
-```markdown
-**Exercise 1**: Make your display increment the number of all digits by 1 every second. When you reach 9, jump back down to 0. 
+**Exercise 1**: Write 9 helper functions which display a particular number. In other words, you should have 9 functions structured similarly to the code below. _Hint: Remember that these functions are to draw the number, not to control which digit you are drawing them at._ 
+
+```c++
+void displayZero(){
+    // put code to display zero here.
+}
 ```
+
+**Exercise 2**: Make your display increment the number of all digits by 1 every second. When you reach 9, jump back down to 0. 
 
 
 ### Shift Registers 
