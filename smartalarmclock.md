@@ -71,7 +71,6 @@ To get this ball rolling, we are first going to start by making our display show
     digitalWrite(F, LOW);
     digitalWrite(G, HIGH);
     digitalWrite(DP, HIGH);
-}
 ```
 What this code does is ... 
 
