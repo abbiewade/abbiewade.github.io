@@ -38,12 +38,23 @@ Now that we have defined all our pins, we need to set them up so the Arduino kno
 ```c++
 void setup() {
     pinMode(A, OUTPUT);
-    ...
+    pinMode(B, OUTPUT);
+    pinMode(C, OUTPUT);
+    pinMode(D, OUTPUT);
+    pinMode(E, OUTPUT);
+    pinMode(F, OUTPUT);
+    pinMode(G, OUTPUT);
+    pinMode(DP, OUTPUT);
+
+    pinMode(firstDigit, OUTPUT);
+    pinMode(secondDigit, OUTPUT);
+    pinMode(thirdDigit, OUTPUT);
     pinMode(fourthDigit, OUTPUT);
 }
 ```
 
 To get this ball rolling, we are first going to start by making our display show four 0's on screen. To do this, we need to put the following code in the control loop. 
+
 ```c++
     digitalWrite(firstDigit, HIGH);
     digitalWrite(secondDigit, HIGH);
@@ -62,7 +73,7 @@ To get this ball rolling, we are first going to start by making our display show
 What this code does is ... 
 
 ```markdown
-**Exercise 1: Make your display increment the number of all digits by 1 every second. When you reach 9, jump back down to 0. 
+**Exercise 1**: Make your display increment the number of all digits by 1 every second. When you reach 9, jump back down to 0. 
 ```
 
 
