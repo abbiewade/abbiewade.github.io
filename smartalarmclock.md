@@ -100,11 +100,112 @@ What the circuit looks like
 
 ... 
 
+Add the following to our defines, making sure to remove the letters A-G and DP from the previous program. 
+
 ```c++
-put code here
+#define dataPin 5
+#define latchPin 6
+#define clockPin 7
 ```
 
+add to setup, making sure to remove the letters A-G and DP from the previous program. 
+```c++
+    pinMode(dataPin, OUTPUT);
+    pinMode(latchPin, OUTPUT);
+    pinMode(clockPin, OUTPUT);
+```
+
+binary number representations of the digits - where 0 means it will be turned on, and 1 means turned off. 
+
+```c++
+    const int zero  = 0b00000011;
+    shiftOut(dataPin, clockPin, MSBFIRST, zero);
+```
+
+**Exercise 3**: Modify your helper functions above to use the binary structure and shift register to display the incrementing numbers. 
+
+### 0000 to 9999
+
+Up until now, we have been displaying the same number on all four digits of our display. It is not as trivial to display different numbers on each digit. 
+
+```c++
+void showdigit (int digit) {
+  switch (digit) {
+    case 0: displayZero();
+      break;
+    case 1: displayOne();
+      break;
+    case 2: displayTwo();
+      break;
+    case 3: displayThree();
+      break;
+    case 4: displayFour();
+      break;
+    case 5: displayFive();
+      break;
+    case 6: displaySix();
+      break;
+    case 7: displaySeven();
+      break;
+    case 8: displayEight();
+      break;
+    case 9: displayNine();
+      break;
+  }
+}
+```
+
+```c++
+// showing 4 digits
+void showdigits (int number) {
+  // e.g. we have "1234"
+  showdigit(number / 1000); // segments are set to display "1"
+  digitalWrite(firstDigit, HIGH); // first digit on,
+  digitalWrite(secondDigit, LOW); // other off
+  digitalWrite(thirdDigit, LOW);
+  digitalWrite(fourthDigit, LOW);
+
+  delay (1);
+
+  number = number % 1000; // remainder of 1234/1000 is 234
+  digitalWrite(firstDigit, LOW); // first digit is off
+  showdigit(number / 100); //// segments are set to display "2"
+  digitalWrite(secondDigit, HIGH); // second digit is on
+  delay (1); // and so on....
+
+  number = number % 100;
+  digitalWrite(secondDigit, LOW);
+  showdigit(number / 10);
+  digitalWrite(thirdDigit, HIGH);
+  delay (1);
+
+  number = number % 10;
+  digitalWrite(thirdDigit, LOW);
+  showdigit(number);
+  digitalWrite(fourthDigit, HIGH);
+  delay (1);
+}
+```
+**Exercise 3**: Using the code above, modify your existing code to write a counter starting at 0000 and counting up to 9999, incrementing the number by 1 each second. For example, your counter should start at 0000, then display 0001, followed by 0002 and so on. 
+
+flickering -- too fast 
+
+```c++
+  for (int i = 0; i < 10000; i++) {
+    long currenttime = millis();
+    while (currenttime + 100 > millis()) {
+      showdigits(i);
+    }
+  }
+```
+
+... 
+
 ### Real Time Clock Module
+
+
+
+
 
 ### Measuring Temperature
 
