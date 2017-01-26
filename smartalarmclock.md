@@ -4,9 +4,9 @@ You can use the [editor on GitHub](https://github.com/abbiewade/abbiewade.github
 
 This tutorial makes the assumption that you have played around with the Arduino, Understand the basics of the program structure and have at a minimum used LEDs and buttons. 
 
-## Just Your Basic Alarm Clock
+## Just Your Basic Clock
 
-To get started, we are going to build a simple alarm clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the internet further down. 
+To get started, we are going to build a simple clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the internet further down. 
 
 ### Displaying Digits
 The first part of the challenge of building a clock is to learn how to display numbers using a four digit 7-segment dispay. 
@@ -38,29 +38,17 @@ Now that we have defined all our pins, we need to set them up so the Arduino kno
 ```c++
 void setup() {
     pinMode(A, OUTPUT);
-    pinMode(B, OUTPUT);
-    pinMode(C, OUTPUT);
-    pinMode(D, OUTPUT);
-    pinMode(E, OUTPUT);
-    pinMode(F, OUTPUT);
-    pinMode(G, OUTPUT);
-    pinMode(DP, OUTPUT);
-
-    pinMode(firstDigit, OUTPUT);
-    pinMode(secondDigit, OUTPUT);
-    pinMode(thirdDigit, OUTPUT);
+    ...
     pinMode(fourthDigit, OUTPUT);
+}
+```
 
+To get this ball rolling, we are first going to start by making our display show four 0's on screen. To do this, we need to put the following code in the control loop. 
+```c++
     digitalWrite(firstDigit, HIGH);
     digitalWrite(secondDigit, HIGH);
     digitalWrite(thirdDigit, HIGH);
     digitalWrite(fourthDigit, HIGH);
-}
-```
-
-
-```c++
-void displayZero(){
     digitalWrite(A, LOW);
     digitalWrite(B, LOW);
     digitalWrite(C, LOW);
@@ -71,6 +59,12 @@ void displayZero(){
     digitalWrite(DP, HIGH);
 }
 ```
+What this code does is ... 
+
+```markdown
+**Exercise 1: Make your display increment the number of all digits by 1 every second. When you reach 9, jump back down to 0. 
+```
+
 
 ### Shift Registers 
 
