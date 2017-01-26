@@ -9,9 +9,9 @@ This tutorial makes the assumption that you have played around with the Arduino,
 To get started, we are going to build a simple clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the internet further down. 
 
 ### Displaying Digits
-The first part of the challenge of building a clock is to learn how to display numbers using a four digit 7-segment dispay. 
+The first part of the challenge of building a clock is to learn how to display numbers using a common anode 7 segment 4 digit display. 
 
-Describe how the 7-segment display works
+Describe how the 7 segment display works
 Show the lettering of the display
 
 To start off we are going to wire this display as you can see in the image below and make each of the four digits display the same number. 
@@ -82,10 +82,22 @@ void displayZero(){
 }
 ```
 
-**Exercise 2**: Make your display increment the number of all digits by 1 every second. When you reach 9, jump back down to 0. 
+**Exercise 2**: Make your display increment the number of all digits by 1 every second. When you reach 9, jump back down to 0 to continue incrementing. 
 
 
 ### Shift Registers 
+
+So you've probably noticed now that you have had a play with the display that it uses a lot of pins to control it. In fact, it uses 12 of the 14 available digital pins on your Arduino Uno. Realistically you have two choices if you want to continue adding in sensors to your project: 
+* Upgrade your Arduino Uno board to a board with a larger amount of pin mounts, such as the Arduino Mega. 
+* Introduce a shift register into the circuit
+
+Why choosing a shift register is more appropriate in this project
+
+How a shift register works
+
+What the circuit looks like 
+
+... 
 
 ```c++
 put code here
