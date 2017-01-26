@@ -109,6 +109,7 @@ Add the following to our defines, making sure to remove the letters A-G and DP f
 ```
 
 add to setup, making sure to remove the letters A-G and DP from the previous program. 
+
 ```c++
     pinMode(dataPin, OUTPUT);
     pinMode(latchPin, OUTPUT);
@@ -186,7 +187,7 @@ void showdigits (int number) {
   delay (1);
 }
 ```
-**Exercise 3**: Using the code above, modify your existing code to write a counter starting at 0000 and counting up to 9999, incrementing the number by 1 each second. For example, your counter should start at 0000, then display 0001, followed by 0002 and so on. 
+**Exercise 4**: Using the code above, modify your existing code to write a counter starting at 0000 and counting up to 9999, incrementing the number by 1 each second. For example, your counter should start at 0000, then display 0001, followed by 0002 and so on. 
 
 flickering -- too fast 
 
