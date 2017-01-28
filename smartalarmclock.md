@@ -15,13 +15,24 @@ insert image of seven segment display
 
 7 Segment displays come in two varieties - common anode and common cathode. Both display types contain the word _common_ in front of them. This simply refers to the fact that for all the LED segments on a digit are linked by at one end. The anode display links the LEDs at the VCC line, which means that if you wish to turn an LED on, you need to change it to a ```LOW``` value. The cathode display is the opposite to the anode, where the common end of the LEDs is connected to the GND line, and the ```HIGH``` value is used to turn a LED segment on. Ultimately, there is no difference in functionality of the two kinds, you just need to invert the logic for your program if the LED segments do the opposite of what you expect. As such, for the remainder of this project we are going to assume when talking about any 7 segment display that it is of the common anode variety. 
 
-Describe how the 7 segment display works
+The 7 segment display works by assigning different lettering to each segment, as shown in the image below. What this means is that if you set the pin attached to ```A``` to ```LOW``` then it will turn on. 
 
 ![](/img/7-segment display.png)
 
-Show the lettering of the display
+Different combinations of different segments lighting up make different shapes. The table below shows the segments required for drawing a zero on the display. Have a go filling out the rest of the table for the other 9 digits. 
 
-draw truth table for the numbers
+| Digit | A | B | C | D | E | F | G | H |
+| ----- |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| 0     | ```LOW``` | ```LOW``` | ```LOW``` | ```LOW``` | ```LOW``` | ```LOW``` | ```HIGH``` | ```HIGH``` |
+| 1     | ||||||||
+| 2     | ||||||||
+| 3     | ||||||||
+| 4     | ||||||||
+| 5     | ||||||||
+| 6     | ||||||||
+| 7     | ||||||||
+| 8     | ||||||||
+| 9     | ||||||||
 
 To start off we are going to wire this display as you can see in the image below and make each of the four digits display the same number. 
 
