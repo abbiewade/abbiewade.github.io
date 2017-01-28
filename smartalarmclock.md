@@ -9,10 +9,19 @@ This tutorial makes the assumption that you have played around with the Arduino,
 To get started, we are going to build a simple clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the internet further down. 
 
 ### Displaying Digits
-The first part of the challenge of building a clock is to learn how to display numbers using a common anode 7 segment 4 digit display. 
+The first part of the challenge of building a clock is to learn how to display numbers using a common anode 7 segment 4 digit display. The 7 segment display is built up of 7 LEDs arranged as shown in the image below. Each of the LEDs is considered a segment, which can be used in conjunction to draw numeric values on the display. While we call this a 7 segment display, technically there are 8 LED segments that make up the display, with the last one being for a decimal point. 
+
+insert image of seven segment display
+
+7 Segment displays come in two varieties - common anode and common cathode. Both display types contain the word _common_ in front of them. This simply refers to the fact that for all the LED segments on a digit are linked by at one end. The anode display links the LEDs at the VCC line, which means that if you wish to turn an LED on, you need to change it to a ```LOW``` value. The cathode display is the opposite to the anode, where the common end of the LEDs is connected to the GND line, and the ```HIGH``` value is used to turn a LED segment on. Ultimately, there is no difference in functionality of the two kinds, you just need to invert the logic for your program if the LED segments do the opposite of what you expect. As such, for the remainder of this project we are going to assume when talking about any 7 segment display that it is of the common anode variety. 
 
 Describe how the 7 segment display works
+
+![](/img/7-segment display.png)
+
 Show the lettering of the display
+
+draw truth table for the numbers
 
 To start off we are going to wire this display as you can see in the image below and make each of the four digits display the same number. 
 
