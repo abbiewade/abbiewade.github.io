@@ -4,6 +4,8 @@ You can use the [editor on GitHub](https://github.com/abbiewade/abbiewade.github
 
 This tutorial makes the assumption that you have played around with the Arduino, Understand the basics of the program structure and have at a minimum used LEDs and buttons. 
 
+TODO: Add links to data sheets, better explain the pins on each sensor, ... 
+
 ## Just Your Basic Clock
 
 To get started, we are going to build a simple clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the internet further down. 
@@ -75,7 +77,7 @@ void setup() {
 }
 ```
 
-To get this ball rolling, we are first going to start by making our display show four 0's on screen. To do this, we need to put the following code in the control loop. 
+To get this ball rolling, we are first going to start by making our display show four 0's on screen. To do this, we need to put the following code in the control loop. The code below turns on the pins for all four digits, and then to turn on the LED segments for the shape zero. 
 
 ```c++
     // Turns the pins that you want to display a number on
@@ -94,7 +96,8 @@ To get this ball rolling, we are first going to start by making our display show
     digitalWrite(G, HIGH);
     digitalWrite(DP, HIGH);
 ```
-What this code does is ... 
+
+Once you have finished typing up your program, download it to the arduino and see what happens. Provided that everything goes smoothly, you should see all four digits displaying the number zero. 
 
 **Exercise 1**: Write 9 helper functions which display a particular number. In other words, you should have 9 functions structured similarly to the code below. _Hint: Remember that these functions are to draw the number, not to control which digit you are drawing them at._ 
 
@@ -114,25 +117,22 @@ So you've probably noticed now that you have had a play with the display that it
 1. Upgrade your Arduino Uno board to a board with a larger amount of pin mounts, such as the Arduino Mega. 
 2. Introduce a shift register into the circuit
 
-Why choosing a shift register is more appropriate in this project
+The choice of which is better is up to you, but in terms of size and cost, for this project a shift register is a better choice. 
 
-How a shift register works
+Shift registers are a chip which allows for additional inputs into the circuit. Shift registers have two different functionalities. The first of these functionalities is to use serial communcication to collect information from sensors. The second functionality is to use parallel communication to allow for multi-pin output control. It is the later that we are going to experiment with below. 
 
-What the circuit looks like 
+In this part of the tutorial we are going to introduce the shift register into the circuit and attempt to complete the same task as in the previous section, drawing zeros on the display. The circuit to construct should look similar to the one below. 
 
 ![](/img/ShiftRegister7segment4digitDisplay_bb.png)
 
-... 
-
-Add the following to our defines, making sure to remove the letters A-G and DP from the previous program. 
+As you can see from your now complete circuit, we have moved the connections from A-G and DP from the arduino and wired them directly into the shift register. As such, our program needs to reflect this. Add the following to our defines, making sure to remove the letters A-G and DP from the previous program. 
 
 ```c++
 #define dataPin 5
 #define latchPin 6
 #define clockPin 7
 ```
-
-add to setup, making sure to remove the letters A-G and DP from the previous program. 
+Similar to above, we also need to modify the setup function, making sure to remove the letters A-G and DP from the previous program. 
 
 ```c++
     pinMode(dataPin, OUTPUT);
@@ -140,14 +140,19 @@ add to setup, making sure to remove the letters A-G and DP from the previous pro
     pinMode(clockPin, OUTPUT);
 ```
 
-binary number representations of the digits - where 0 means it will be turned on, and 1 means turned off. 
+To output data to the shift register, there is a simple one-line command that we need to learn - ```shiftOut(dataPin, clockPin, MSBFIRST, output_value)```. What this command does is tell the shift register to tell the output valies to turn on or off accordingly. The ```output_value``` is a number between 0 and 255, which maps the binary values to the different segments. For example, the ```output_value``` for drawing zero would look like ```0b00000011```, which represents in a binary format the combination drawn in the table earlier in the tutorial. By adding the binary value for each number as a constant at the top of your program, you can modify the helper function to look like the following. 
 
 ```c++
     const int zero  = 0b00000011;
-    shiftOut(dataPin, clockPin, MSBFIRST, zero);
+    
+    void displayZero(){
+        shiftOut(dataPin, clockPin, MSBFIRST, zero);
+    }
 ```
 
-**Exercise 3**: Modify your helper functions above to use the binary structure and shift register to display the incrementing numbers. 
+Similar to before, download the finished program onto your Arduino, and admire your lovely display showing four zeros for the world to see. 
+
+**Exercise 3**: Modify your helper functions above to use the binary structure and shift register to display the incrementing numbers, in the same pattern as exercise 2. 
 
 ### 0000 to 9999
 
