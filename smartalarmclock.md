@@ -100,6 +100,8 @@ How a shift register works
 
 What the circuit looks like 
 
+![](/img/ShiftRegister7segment4digitDisplay_bb.png)
+
 ... 
 
 Add the following to our defines, making sure to remove the letters A-G and DP from the previous program. 
@@ -206,11 +208,16 @@ flickering -- too fast
 
 ### Real Time Clock Module
 
+![](/img/tiny-rtc_bb.png)
+
+![](/img/simple-clock_bb.png)
+
 
 
 
 
 ### Measuring Temperature
+
 
 ### Additional Functionalities
 - timer
