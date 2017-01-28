@@ -16,6 +16,8 @@ Show the lettering of the display
 
 To start off we are going to wire this display as you can see in the image below and make each of the four digits display the same number. 
 
+![](/img/7segment4digitDisplay_bb.png)
+
 First off we need to define our pin values in the code. The large advantage of doing so is to allow us to reuse our code later on. If we decide later to use a different set of pins to control this display, all we have to do is change one value rather than multiple throughout our code. 
 
 ```c++
