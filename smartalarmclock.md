@@ -8,7 +8,7 @@ TODO: Add links to data sheets, better explain the pins on each sensor, ...
 
 ## Just Your Basic Clock
 
-To get started, we are going to build a simple clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the internet further down. 
+To get started, we are going to build a alarm clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the internet further down. 
 
 ### Displaying Digits
 The first part of the challenge of building a clock is to learn how to display numbers using a common anode 7 segment 4 digit display. The 7 segment display is built up of 7 LEDs arranged as shown in the image below. Each of the LEDs is considered a segment, which can be used in conjunction to draw numeric values on the display. While we call this a 7 segment display, technically there are 8 LED segments that make up the display, with the last one being for a decimal point. 
@@ -140,7 +140,7 @@ Similar to above, we also need to modify the setup function, making sure to remo
     pinMode(clockPin, OUTPUT);
 ```
 
-To output data to the shift register, there is a simple one-line command that we need to learn - ```shiftOut(dataPin, clockPin, MSBFIRST, output_value)```. What this command does is tell the shift register to tell the output valies to turn on or off accordingly. The ```output_value``` is a number between 0 and 255, which maps the binary values to the different segments. For example, the ```output_value``` for drawing zero would look like ```0b00000011```, which represents in a binary format the combination drawn in the table earlier in the tutorial. By adding the binary value for each number as a constant at the top of your program, you can modify the helper function to look like the following. 
+To output data to the shift register, there is a simple one-line command that we need to learn - ```shiftOut(dataPin, clockPin, MSBFIRST, output_value)```. What this command does is tell the shift register to tell the output values to turn on or off accordingly. The ```output_value``` is a number between 0 and 255, which maps the binary values to the different segments. For example, the ```output_value``` for drawing zero would look like ```0b00000011```, which represents in a binary format the combination drawn in the table earlier in the tutorial. By adding the binary value for each number as a constant at the top of your program, you can modify the helper function to look like the following. 
 
 ```c++
     const int zero  = 0b00000011;
@@ -238,14 +238,22 @@ flickering -- too fast
 ![](/img/simple-clock_bb.png)
 
 
-
-
+- setting time manually 
 
 ### Measuring Temperature
 
 
 ### Additional Functionalities
-- timer
-- alarm
-- setting time manually 
-- ...
+Congratulations, you have now built a simple alarm clock which has the capabilites of measuring temperature. By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Enjoy. 
+
+
+**Exercise X**: Introduce an alarm system into your clock, such that you can input the time an alarm should go off, and it will sound an alarm. 
+
+**Exercise X**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends. 
+
+
+## Making Your Clock Smart
+TODO
+
+## Final Remarks
+TODO
