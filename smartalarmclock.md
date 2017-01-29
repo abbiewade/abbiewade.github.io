@@ -224,38 +224,167 @@ Now that we have the two helper functions in place to help us write unique 4 dig
 
 **Exercise 4**: Using the code above, modify your existing code to write a counter starting at 0000 and counting up to 9999, incrementing the number by 1 each second. For example, your counter should start at 0000, then display 0001, followed by 0002 and so on.
 
-TODO -- flickering -- too fast
+### My Display is Flickering??
+
+Now it is more than likely for the exercise above you have written code similar to what is below in your main control loop.
 
 ```c++
-  for (int i = 0; i < 10000; i++) {
-    long currenttime = millis();
-    while (currenttime + 100 > millis()) {
-      showdigits(i);
-    }
-  }
+for(int i = 0; i < 10000; i++){
+    showdigits(i);
+    delay(1000);
+}
 ```
 
+For those who did, you may notice that your display isn't showing the number correctly. As it is, your display will be flickering and looking all kinds of funny. Not to worry - the problem here is the structure of the main loop. In the code below, we have written a code sample that is identical to the one above, however in not using the delay and using ```millis()```, we remove the flickering.
+
+
+```c++
+for (int i = 0; i < 10000; i++) {
+    long currenttime = millis();
+    while (currenttime + 1000 > millis()) {
+        showdigits(i);
+    }
+}
+```
+
+Now that you have solved the flickering problem, it is time to move onto adding the clock to the circuit.
 
 ### Real Time Clock Module
 
+So now is the time you have all been waiting for - putting a real time clock into the circuit. But first, we are going to just play with this module alone. A real time clock module looks similar to the sensor shown below. The datasheet for the sensor is available [here](https://datasheets.maximintegrated.com/en/ds/DS1307.pdf).
+
+![](/img/sku_161172_1.jpg)
+
+Looking at the sensor you will notice that there are two groups of input/output pins, one on the left and the other on the right, which control this sensor. These groups are exactly the same with one minor difference. The larger group has additional pins which can be used for advanced usage of this sensor. As such, we will be using the smaller of the two groups in this tutorial to start off.
+
+This is a sensor that using the I2C ports can provide the time and calendar date. There are several libraries available online to interface with this sensor, for example [here](https://github.com/adafruit/RTClib/archive/master.zip) or  [here](https://www.elecrow.com/wiki/index.php?title=File:RTC.zip). However for the purposes of learning about the sensor, we are going to use the I2C pins on our Arduino and get the information manually.
+
+This sensor by itself is very easy to wire into the Arduino. The first circuit we are going to build consequently is the one below.  
+
 ![](/img/tiny-rtc_bb.png)
+
+This clock module has two different functionalities we are going to use, set and get.
+
+
+```c++
+#include "Wire.h"
+#define DS1307_I2C_ADDRESS 0x68  // the I2C address of Tiny RTC
+```
+
+```c++
+byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
+```
+
+```c++
+byte decToBcd(byte val){   return ( (val/10*16) + (val%10) );  }
+byte bcdToDec(byte val){   return ( (val/16*10) + (val%16) );  }
+```
+
+To begin with, we are going to write the function to set the time of the clock.
+
+```c++
+// Function to set the current time, change the second&minute&hour to the right time
+void setClock(int second, int minute, int hour, int dayOfWeek, int dayOfMonth, int month, int year) {
+    this.second = second;
+    this.minute = minute;
+    this.hour   = hour;
+    this.dayOfWeek = dayOfWeek;
+    this.dayOfMonth = dayOfMonth;
+    this.month = month;
+    this.year = year;
+
+    Wire.beginTransmission(DS1307_I2C_ADDRESS);
+    Wire.write(decToBcd(0));
+    Wire.write(decToBcd(second));    
+    Wire.write(decToBcd(minute));
+    Wire.write(decToBcd(hour));      
+    Wire.write(decToBcd(dayOfWeek));
+    Wire.write(decToBcd(dayOfMonth));
+    Wire.write(decToBcd(month));
+    Wire.write(decToBcd(year));
+    Wire.endTransmission();
+}
+```
+```c++
+void getTime(){
+     Wire.beginTransmission(DS1307_I2C_ADDRESS);
+     Wire.write(decToBcd(0));
+     Wire.endTransmission();
+     Wire.requestFrom(DS1307_I2C_ADDRESS, 7);
+     second     = bcdToDec(Wire.read() & 0x7f);
+     minute     = bcdToDec(Wire.read());
+     hour       = bcdToDec(Wire.read() & 0x3f);
+     dayOfWeek  = bcdToDec(Wire.read());
+     dayOfMonth = bcdToDec(Wire.read());
+     month      = bcdToDec(Wire.read());
+     year       = bcdToDec(Wire.read());
+}
+```
+
+```c++
+void printTime(){
+    Serial.print(hour, DEC);
+    Serial.print(":");
+    Serial.print(minute, DEC);
+    Serial.print(":");
+    Serial.print(second, DEC);
+    Serial.print("  ");
+    Serial.print(month, DEC);
+    Serial.print("/");
+    Serial.print(dayOfMonth, DEC);
+    Serial.print("/");
+    Serial.print(year,DEC);
+    Serial.print("  ");
+    Serial.println();
+}
+```
+
+### Building A Simple Clock
+
+Now that we understand how the clock module works, we are going to modify the circuit to include the display. Instead of printing the time to serial, we are going to display the time on our displays. To beging with you need to build the circuit featured below.
 
 ![](/img/simple-clock_bb.png)
 
-
+**Exercise 5**: Using the circuit above, join your clock code and display code to make the display read what the time is.
 
 ### Measuring Temperature
 
+
+
+
 ![](/img/temperatureClock_bb.png)
+
+```c++
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BMP085_U.h>
+```
+
+
+```c++
+Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085); //barometer sensor
+```
+
+```c++
+sensors_event_t event;
+float temperature;
+```
+
+```c++
+void displayTemperature(){
+    bmp.getTemperature(&temperature);
+    temperature*=100;
+    showdigits((int)temperature); 
+}
+```
 
 ### Additional Functionalities
 Congratulations, you have now built a simple alarm clock which has the capabilites of measuring temperature. By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Enjoy.
 
-**Exercise X**: Using the buttons in your circuit, write a function to allow you to change and set the time manually.
+**Exercise 6**: Using the buttons in your circuit, write a function to allow you to change and set the time manually.
 
-**Exercise X**: Introduce an alarm system into your clock, such that you can input the time an alarm should go off, and it will sound an alarm.
+**Exercise 7**: Introduce an alarm system into your clock, such that you can input the time an alarm should go off, and it will sound an alarm.
 
-**Exercise X**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
+**Exercise 8**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
 
 
 ## Making Your Clock Smart
