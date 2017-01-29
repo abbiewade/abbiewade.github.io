@@ -156,7 +156,7 @@ Similar to before, download the finished program onto your Arduino, and admire y
 
 ### 0000 to 9999
 
-Up until now, we have been displaying the same number on all four digits of our display. It is not as trivial to display different numbers on each digit. This is because the LED segments connected to segment A are the same pin for all four digits (and the same for every other joining segment). As such, we need to develop a way so that we can write unique numbers to each of the different digits. The way we do this is by writing to all four digits, and then turning one of the digits off. We then repeat the step writing to three of the digits and turning another one off. By the time we write to the last digit, all the other three digits are set with their appropriate values.
+Up until now, we have been displaying the same number on all four digits of our display. It is not as trivial to display different numbers on each digit. This is because the LED segments connected to segment A are the same pin for all four digits (and the same for every other joining segment). As such, we need to develop a way so that we can write unique numbers to each of the different digits.
 
 To start off with, we are going to modify our program to contain the following helper function. The idea of this helper function is so that we can turn a integer value into the functions that we wrote earlier in this tutorial. The code should look something similar to below.
 
@@ -188,42 +188,43 @@ void showdigit (int digit) {
 }
 ```
 
-With this helper function implemented, we are going to
+With this helper function implemented, we are going to write a function called ```showdigits``` which takes in a number and displays this number on screen. As it is four digits, the easiest way to gain the individual digits to display is through division. If we divide the input number by 1000, we get the first digit. If we divide the input number by 100 we get the second digit, and so on. Using this idea, remainders when dividing and recursion, we can write the function below to display a four digit number.
 
 ```c++
 // showing 4 digits
 void showdigits (int number) {
-  // e.g. we have "1234"
-  showdigit(number / 1000); // segments are set to display "1"
-  digitalWrite(firstDigit, HIGH); // first digit on,
-  digitalWrite(secondDigit, LOW); // other off
-  digitalWrite(thirdDigit, LOW);
-  digitalWrite(fourthDigit, LOW);
+    showdigit(number / 1000); // segments are set to display "1"
+    digitalWrite(firstDigit, HIGH);
+    digitalWrite(secondDigit, LOW);
+    digitalWrite(thirdDigit, LOW);
+    digitalWrite(fourthDigit, LOW);
+    delay (1);
 
-  delay (1);
+    number = number % 1000;
+    digitalWrite(firstDigit, LOW);
+    showdigit(number / 100);
+    digitalWrite(secondDigit, HIGH);
+    delay (1);
 
-  number = number % 1000; // remainder of 1234/1000 is 234
-  digitalWrite(firstDigit, LOW); // first digit is off
-  showdigit(number / 100); //// segments are set to display "2"
-  digitalWrite(secondDigit, HIGH); // second digit is on
-  delay (1); // and so on....
+    number = number % 100;
+    digitalWrite(secondDigit, LOW);
+    showdigit(number / 10);
+    digitalWrite(thirdDigit, HIGH);
+    delay (1);
 
-  number = number % 100;
-  digitalWrite(secondDigit, LOW);
-  showdigit(number / 10);
-  digitalWrite(thirdDigit, HIGH);
-  delay (1);
-
-  number = number % 10;
-  digitalWrite(thirdDigit, LOW);
-  showdigit(number);
-  digitalWrite(fourthDigit, HIGH);
-  delay (1);
+    number = number % 10;
+    digitalWrite(thirdDigit, LOW);
+    showdigit(number);
+    digitalWrite(fourthDigit, HIGH);
+    delay (1);
 }
 ```
+
+Now that we have the two helper functions in place to help us write unique 4 digit numbers, have a go modifying your main control loop so that it displays the number ```1234```.
+
 **Exercise 4**: Using the code above, modify your existing code to write a counter starting at 0000 and counting up to 9999, incrementing the number by 1 each second. For example, your counter should start at 0000, then display 0001, followed by 0002 and so on.
 
-flickering -- too fast
+TODO -- flickering -- too fast
 
 ```c++
   for (int i = 0; i < 10000; i++) {
@@ -234,7 +235,6 @@ flickering -- too fast
   }
 ```
 
-...
 
 ### Real Time Clock Module
 
@@ -243,14 +243,15 @@ flickering -- too fast
 ![](/img/simple-clock_bb.png)
 
 
-- setting time manually
 
 ### Measuring Temperature
 
+![](/img/temperatureClock_bb.png)
 
 ### Additional Functionalities
 Congratulations, you have now built a simple alarm clock which has the capabilites of measuring temperature. By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Enjoy.
 
+**Exercise X**: Using the buttons in your circuit, write a function to allow you to change and set the time manually.
 
 **Exercise X**: Introduce an alarm system into your clock, such that you can input the time an alarm should go off, and it will sound an alarm.
 
