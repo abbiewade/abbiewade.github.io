@@ -396,7 +396,7 @@ This code does three tasks. The first task gets the temperature values and store
 
 **Exercise 8**: Modify your code such that it can deal with negative temperatures being displayed.
 
-**Exercise 9**: Modify your code such that if the button is pressed, the display will show the temperature, and if the button is not pressed, it will display the time. 
+**Exercise 9**: Modify your code such that if the button is pressed, the display will show the temperature and turn on the LED. If the button is not pressed, it will display the time and turn off the LED. 
 
 ### Extra Functionalities
 Congratulations, you have now built a simple alarm clock which has the capability of measuring temperature. By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Additionally, you may want to consider using a piezo sensor to simulate the alarm sound, which can be wired into your circuit similar to the image below. Piezo sensors are programmed identically to LEDs, where ```HIGH``` will make the sensor emit a noise, and ```LOW``` will turn the sound off.
