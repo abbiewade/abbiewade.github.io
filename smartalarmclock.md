@@ -2,7 +2,7 @@
 
 This tutorial makes the assumption that you have played around with the Arduino, Understand the basics of the program structure and have at a minimum used LEDs and buttons.
 
-__ TODO: better explain the pins on each sensor, fix the image links when they don't load __
+__ TODO: better explain the pins on each sensor, ... __
 
 ## Just Your Basic Clock
 
@@ -365,22 +365,22 @@ Now that you have all the correct libraries installed, it is time to build this 
 
 ![](/img/temperatureClock_bb.png)
 
-
+To include the libraries in what we have done so far, we need to add the following include lines to the base code.
 
 ```c++
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BMP085_U.h>
 ```
 
+Using this library means we can treat the sensor values similar to an object. As a consequence though, we need to add the following global declarations into our base code. These allow us to store and access the sensor data later in the program.
 
 ```c++
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085); //barometer sensor
-```
-
-```c++
 sensors_event_t event;
 float temperature;
 ```
+
+Actually accessing the sensor values that are measured is super easy. To make our lives easier, we are going to write a function called ```displayTemperature``` which gets the temperature and displays it to screen for us. The code should look like below.
 
 ```c++
 void displayTemperature(){
@@ -390,17 +390,24 @@ void displayTemperature(){
 }
 ```
 
+This code does three tasks. The first task gets the temperature values and stores them in our temperature variable. The second one multiples the value by 100 so that it is a number we could display on screen with the decimal point in the correct location. The last step utilises your code from earlier to write the temperature on screen.
+
+**Exercise 7**: Using the above code, write a new function that displays the temperature using 3 digits and draws a C or F to represent what temperature type you are measuring on the final digit.
+
+**Exercise 8**: Modify your code such that it can deal with negative temperatures being displayed.
+
+**Exercise 9**: Modify your code such that if the button is pressed, the display will show the temperature, and if the button is not pressed, it will display the time. 
+
 ### Extra Functionalities
 Congratulations, you have now built a simple alarm clock which has the capability of measuring temperature. By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Additionally, you may want to consider using a piezo sensor to simulate the alarm sound, which can be wired into your circuit similar to the image below. Piezo sensors are programmed identically to LEDs, where ```HIGH``` will make the sensor emit a noise, and ```LOW``` will turn the sound off.
 
 ![](/img/piezoCircuit_bb.png)
 
-**Exercise 7**: Using the buttons in your circuit, write a function to allow you to change and set the time manually.
+**Exercise 10**: Using the buttons in your circuit, write a function to allow you to change and set the time manually.
 
-**Exercise 8**: Introduce an alarm system into your clock, such that you can input the time an alarm should go off, and it will sound an alarm.
+**Exercise 11**: Introduce an alarm system into your clock, such that you can input the time an alarm should go off, and it will sound an alarm.
 
-**Exercise 9**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
-
+**Exercise 12**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
 
 ## Making Your Clock Smart
 TODO
