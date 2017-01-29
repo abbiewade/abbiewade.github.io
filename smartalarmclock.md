@@ -117,7 +117,9 @@ So you've probably noticed now that you have had a play with the display that it
 1. Upgrade your Arduino Uno board to a board with a larger amount of pin mounts, such as the Arduino Mega.
 2. Introduce a shift register into the circuit
 
-The choice of which is better is up to you, but in terms of size and cost, for this project a shift register is a better choice.
+The choice of which is better is up to you, but in terms of size and cost, for this project a shift register is a better choice. The shift register we will be using looks similar to the one featured in the image below. The data sheet can be found [here](https://cdn.shopify.com/s/files/1/0045/8932/files/EXPAND_ShiftRegisterModule.pdf?100739).
+
+![](/img/index.jpeg)
 
 Shift registers are a chip which allows for additional inputs into the circuit. Shift registers have two different functionalities. The first of these functionalities is to use serial communcication to collect information from sensors. The second functionality is to use parallel communication to allow for multi-pin output control. It is the later that we are going to experiment with below.
 
@@ -341,7 +343,7 @@ void printTime(){
 
 ### Building A Simple Clock
 
-Now that we understand how the clock module works, we are going to modify the circuit to include the display. Instead of printing the time to serial, we are going to display the time on our displays. To beging with you need to build the circuit featured below.
+Now that we understand how the clock module works, we are going to modify the circuit to include the display. Instead of printing the time to serial, we are going to display the time on our displays. To begin with you need to build the circuit featured below.
 
 ![](/img/simple-clock_bb.png)
 
@@ -349,10 +351,19 @@ Now that we understand how the clock module works, we are going to modify the ci
 
 ### Measuring Temperature
 
+The datasheet can be found [here](https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf)
 
+![](/img/bmp180.jpeg)
 
+There are two ways we can choose to program a sensor by Adafruit, from scratch using the I2C data, or using the [Adafruit Sensor Library](https://github.com/adafruit/Adafruit_Sensor). This seems like a perfect time in the tutorial to introduce using external Arduino libraries. Installing external libraries is a very simple process which involves downloading the packaged code from the source, and placing it in a correct folder. If you have never installed a library before, the Arduino Guide has an excellent explaination of how you can install different libraries which you can find [here](https://www.arduino.cc/en/Guide/Libraries).
+
+**Exercise 6**: Using the links in the paragraph above, install the Adafuit Sensor Library. Once you have finished, restart your Arduino IDE.
+
+Now that you have all the correct libraries installed, it is time to build this sensor into our circuit! The circuit you need to build is featured below.
 
 ![](/img/temperatureClock_bb.png)
+
+
 
 ```c++
 #include <Adafruit_Sensor.h>
@@ -373,18 +384,20 @@ float temperature;
 void displayTemperature(){
     bmp.getTemperature(&temperature);
     temperature*=100;
-    showdigits((int)temperature); 
+    showdigits((int)temperature);
 }
 ```
 
-### Additional Functionalities
-Congratulations, you have now built a simple alarm clock which has the capabilites of measuring temperature. By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Enjoy.
+### Extra Functionalities
+Congratulations, you have now built a simple alarm clock which has the capability of measuring temperature. By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Additionally, you may want to consider using a piezo sensor to simulate the alarm sound, which can be wired into your circuit similar to the image below. Piezo sensors are programmed identically to LEDs, where ```HIGH``` will make the sensor emit a noise, and ```LOW``` will turn the sound off.
 
-**Exercise 6**: Using the buttons in your circuit, write a function to allow you to change and set the time manually.
+![](/img/piezoCircuit_bb.png)
 
-**Exercise 7**: Introduce an alarm system into your clock, such that you can input the time an alarm should go off, and it will sound an alarm.
+**Exercise 7**: Using the buttons in your circuit, write a function to allow you to change and set the time manually.
 
-**Exercise 8**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
+**Exercise 8**: Introduce an alarm system into your clock, such that you can input the time an alarm should go off, and it will sound an alarm.
+
+**Exercise 9**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
 
 
 ## Making Your Clock Smart
