@@ -1,9 +1,29 @@
 # Building a Smart Alarm Clock
 
-In this tutorial, we're going to build a smart alarm clock from the ground up!  This tutorial makes the assumption that you:
-- have played around with an Arduino board before, 
-- understand the basics of the program structure, and 
-- have at a minimum used a microcontroller to turn on LEDs and sense button input.
+If you are anything like me you hate waking up in the mornings and your alarm clock is your worst nightmare. The dreaded _beep. beep. beep._ in the morning is enough to drive anyone insane. But how does it all work? Is there a way we can make it smarter to maximise the amount of sleep you can get every morning?
+
+This tutorial aims to answer all your questions about how an alarm clock works and what you can do to maximise your sleeping time. So, in this tutorial we are going to build a smart alarm clock from the ground up! What this means is we are going to start with simple electronic components and first build a _dumb_ alarm clock. Once we complete this challenge, we are then going to take what we originally built and connect it to the internet to make it _smart_.
+
+Smart Alarm clocks have many capabilities that a normal alarm clock doesn't. For example, what if you never had to set an alarm again. Instead, your clock automatically looked at your calendar and chose the best possible time to wake you up? What if your clock could account for road closures and traffic and still get you up in time for work? All these are possible as you will see in the tutorial to come.
+
+For this tutorial you will need a fair few electronic components. Here is a list of all the components you will need to complete the entire tutorial: **TODO-Add Part Numbers to List**
+
+- 1 x Arduino Uno
+- 1 x Raspberry Pi 3
+- 1 x **Arduino Addon Board**
+- 1 x 4 Digit 7 Segment Anode Display
+- 1 x Shift Register
+- 1 x Tiny RTC Module
+- 1 x Barometer sensor (BMP180)
+- 3 x LEDs (different colours)
+- 5 x buttons
+- 8 x 330ohm resisters
+- 1 x Piezo Sensor
+- 5 x 1Mohm resisters
+- 3 x 220ohm resisters
+- Breadboard + Wires
+
+This tutorial does assume that you have some basic knowledge in the Arduino framework. As such, there is an assumption that you have spent some time familiarising yourself with an Arduino board and building circuits. Additionally, there is an assumption that you have a basic knowledge of programming in c++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. With these assumptions in place, the tutorial will walk you through an introduction of each new component introduced into the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
 
 __ TODO: better explain the pins on each sensor, ... __
 
@@ -12,7 +32,7 @@ __ TODO: better explain the pins on each sensor, ... __
 To get started, we are going to build a alarm clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the Internet further down.
 
 ### Displaying Digits
-The first challenge is displaying numbers using a 7 segment, 4 digit display. A 7 segment display is built up of 7 LEDs arranged as shown in the image below. Each of the LEDs is considered a segment, which can be used in conjunction to draw numeric values on the display. 
+The first challenge is displaying numbers using a 7 segment, 4 digit display. A 7 segment display is built up of 7 LEDs arranged as shown in the image below. Each of the LEDs is considered a segment, which can be used in conjunction to draw numeric values on the display.
 
 While we call this a 7 segment display, technically there are 8 LED segments that make up the display (with the last one being for a decimal point). The data sheet for this component can be found [here](https://e-radionica.com/productdata/LD3361BS.pdf).
 
@@ -37,7 +57,7 @@ Different combinations of different segments lighting up make different shapes. 
 | 8     | ||||||||
 | 9     | ||||||||
 
-7 Segment displays come in two varieties - common _anode_ and common _cathode_. Both display types contain the word '_common_' in front of them. This simply refers to the fact that for all the LED segments on a digit are linked by at one end. The common _anode_ variant links the LEDs at the ```VCC/VDD``` (+V) line rather than at ```VEE/VSS/GND``` (0V), which means that if you wish to turn an LED on, you need to power all of the LEDs, and only ground the segments you want to light up. 
+7 Segment displays come in two varieties - common _anode_ and common _cathode_. Both display types contain the word '_common_' in front of them. This simply refers to the fact that for all the LED segments on a digit are linked by at one end. The common _anode_ variant links the LEDs at the ```VCC/VDD``` (+V) line rather than at ```VEE/VSS/GND``` (0V), which means that if you wish to turn an LED on, you need to power all of the LEDs, and only ground the segments you want to light up.
 
 The cathode is the opposite to the anode, where the common LED connection is at the GND line, and a ```HIGH``` value is used to turn on each individual segment. Ultimately, there is no difference in functionality of the two kinds, you just need to invert the logic for your program if the LED segments do the opposite of what you expect! For the remainder of this project we are going to assume when talking about any 7 segment display that it is of the common _anode_ variety.
 
@@ -412,3 +432,12 @@ TODO
 
 ## Final Remarks
 TODO
+
+Where to go from here
+    - music alarm using the raspberry pi
+    - control the clock with a mobile app
+    - adapt your wake up time based off traffic
+    - different alarms based on the morning you are waking up
+    - automatic brightness display
+    - can play music through it
+    - changing the display
