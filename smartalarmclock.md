@@ -1,6 +1,6 @@
 # Building a Smart Alarm Clock
 
-If you are anything like me you hate waking up in the mornings and your alarm clock is your worst nightmare. The dreaded _beep. beep. beep._ in the morning is enough to drive anyone insane. But how does it all work? Is there a way we can make it smarter to maximise the amount of sleep you can get every morning?
+If you are anything like me you hate waking up in the mornings and your alarm clock is your worst nightmare. The dreaded _"beep. beep. beep."_ in the morning is enough to drive anyone insane. But how does it all work? Is there a way we can make it smarter to maximise the amount of sleep you can get every morning?
 
 This tutorial aims to answer all your questions about how an alarm clock works and what you can do to maximise your sleeping time. So, in this tutorial we are going to build a smart alarm clock from the ground up! What this means is we are going to start with simple electronic components and first build a _dumb_ alarm clock. Once we complete this challenge, we are then going to take what we originally built and connect it to the internet to make it _smart_.
 
@@ -36,11 +36,11 @@ The first challenge is displaying numbers using a 7 segment, 4 digit display. A 
 
 While we call this a 7 segment display, technically there are 8 LED segments that make up the display (with the last one being for a decimal point). The data sheet for this component can be found [here](https://e-radionica.com/productdata/LD3361BS.pdf).
 
-![<4-digit_7-segment_display image>](/img/DI-0017_2.jpg)
+![4-digit_7-segment_display image](/img/DI-0017_2.jpg)
 
 A 7 segment display works by assigning different lettering to each segment, as shown in the image below. What this means is that if you set the pin attached to ```A``` to ```LOW``` then it will turn on.
 
-![<7-segment_display lettering image>](/img/7-segment display.png)
+![7-segment_display lettering image](/img/7-segment display.png)
 
 Different combinations of different segments lighting up make different shapes. The table below shows the segments required for drawing a zero on the display. Have a go filling out the rest of the table for the other 9 digits.
 
@@ -65,7 +65,7 @@ The cathode is the opposite to the anode, where the common LED connection is at 
 
 Now that you have a basic understanding of how a 7-segment display works, we are going to have a go building a simple circuit containing one, and program it to display the number zero on all four digits. To start off we are going to build the circuit as displayed in the image below. Once you finish building the circuit it is then time to move on to the programming.
 
-![<4-digit_7-segment_display circuit image>](/img/7segment4digitDisplay_bb.png)
+![4-digit_7-segment_display circuit image](/img/7segment4digitDisplay_bb.png)
 
 #### Time to for control
 
@@ -148,13 +148,13 @@ You've probably noticed that controlling the display this way uses a lot of pins
 
 The choice of which is better is up to you, but in terms of size and cost for this project, a shift register is a better choice. The shift register we will be using looks similar to the one featured in the image below. The data sheet can be found [here](https://cdn.shopify.com/s/files/1/0045/8932/files/EXPAND_ShiftRegisterModule.pdf?100739).
 
-![<shift_register image>](/img/index.jpeg)
+![shift_register image](/img/index.jpeg)
 
 Shift registers are a chip which allows for additional inputs into the circuit. Shift registers have two different functionalities. The first of these is to use serial communcication to collect information from sensors. The second functionality is to use parallel communication to allow for multi-pin output control. It is the latter function that we are going to use to drive the display.
 
 For this part of the tutorial we are going to introduce the shift register into the circuit and attempt to complete the same task as in the previous section, drawing zeros on the display. The circuit to construct should look similar to the one below.
 
-![<ShiftRegister7segment4digitDisplay image>](/img/ShiftRegister7segment4digitDisplay_bb.png)
+![ShiftRegister7segment4digitDisplay image](/img/ShiftRegister7segment4digitDisplay_bb.png)
 
 As you can see from your now complete circuit, we have moved the connections from A-G and DP from the Arduino and wired them directly into the shift register. As such, the program needs to reflect this. Add the following to your #defines, making sure to remove the letters A-G and DP from the previous program:
 
@@ -290,7 +290,7 @@ Now that you have solved the flickering problem, it is time to move onto adding 
 
 Now is the time (ha ha) you have all been waiting for - putting a real time clock into the circuit. First, we are going to just play with this module alone, then add it into the rest (don't disconnect anything yet though!). A real time clock module looks similar to the sensor shown below. The datasheet for the sensor is available [here](https://datasheets.maximintegrated.com/en/ds/DS1307.pdf).
 
-![<tinyRTC image>](/img/sku_161172_1.jpg)
+![tinyRTC image](/img/sku_161172_1.jpg)
 
 Looking at the sensor you will notice that there are two groups of input/output pins, one on the left and the other on the right, which control this sensor. These groups are exactly the same with one minor difference. The larger group has additional pins which can be used for advanced functionality. For this project, we will be using the smaller group.
 
@@ -298,7 +298,7 @@ This is a module that provides time and calendar date through what's called the 
 
 By itself is very easy to wire into the Arduino. The first circuit we are going to build consequently is the one below (you can leave the rest of your wiring connected as long as it doesn't interfere with this circuit):
 
-![<TinyRTC circuit image>](/img/tiny-rtc_bb.png)
+![TinyRTC circuit image](/img/tiny-rtc_bb.png)
 
 This clock module has two different functionalities we are going to use, setting the time, and reading the time.
 
@@ -364,7 +364,6 @@ Wire.begin();
 Serial.begin(9600);
 ```
 
-
 ```c++
 void printTime(){
   Serial.print(hour, DEC);
@@ -390,7 +389,7 @@ ___TODO talk about reading serial needing to be on a different frequency___
 
 Now that we understand how the clock module works, we are going to modify the circuit to include the display. Instead of printing the time to serial, we are going to display the time on our displays. To begin with you need to build the circuit featured below.
 
-![<Simple Clock Circuit Image>](/img/simple-clock_bb.png)
+![Simple Clock Circuit Image](/img/simple-clock_bb.png)
 
 **Exercise 5**: Using the circuit above, join your clock code and display code to make the display read what the time is.
 
@@ -400,7 +399,7 @@ ___TODO LEAD-IN/ INTRO. BE SURE TO MENTION THIS IS A BAROMETER SENSOR, BUT WE'RE
 
 The data sheet can be found [here](https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf)
 
-![<Simple Alarm Clock Circuit Image>](/img/bmp180.jpeg)
+![Simple Alarm Clock Circuit Image](/img/bmp180.jpeg)
 
 There are two ways we can choose to program this particular sensor, from scratch using the I2C data, or using the [Adafruit Sensor Library](https://github.com/adafruit/Adafruit_Sensor). This seems like a perfect time in the tutorial to introduce using external Arduino libraries. Installing external libraries is a very simple process which involves downloading the packaged code from the source, and placing it in a correct folder. If you have never installed a library before, the Arduino Guide has an excellent explanation of how you can install different libraries which you can find [here](https://www.arduino.cc/en/Guide/Libraries).
 
