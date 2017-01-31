@@ -1,7 +1,8 @@
 #include "Wire.h"
 #include <Adafruit_Sensor.h>
+#include <Adafruit_BMP085_U.h>
 
-#define RTC_Address 0x68;   // the I2C Address of the Tiny RTC
+#define RTC_Address 0x68   // the I2C Address of the Tiny RTC
 
 #define firstDigit  2
 #define secondDigit 3
@@ -37,7 +38,7 @@ const int nine  = 0b00001001;
 const int dp    = 0b11111110;
 
 
-void showDigits(int digit){
+void showDigits(int number){
     digitalWrite(firstDigit,  LOW); 
     digitalWrite(secondDigit, LOW); 
     digitalWrite(thirdDigit,  LOW); 
@@ -76,7 +77,7 @@ void showDigits(int digit){
 }
 
 void convertDigit(int digit){
-    swtich(digit){
+    switch (digit) {
         case 0: displayValue(zero);  break; 
         case 1: displayValue(one);   break; 
         case 2: displayValue(two);   break; 
@@ -164,7 +165,7 @@ float temperature;
 
 void serialTemperature(){
     bmp.getTemperature(&temperature); 
-    Serial.print(temperature)' 
+    Serial.print(temperature);
     Serial.println("*C");    
 }
 
@@ -216,6 +217,7 @@ void setup(){
 void loop(){
     if(digitalRead(button1) == HIGH){
         displayTemperature(); 
+        serialTemperature(); 
         digitalWrite(LEDred, HIGH); 
      }else{
         displayTime(); 
