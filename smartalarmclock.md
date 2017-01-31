@@ -340,8 +340,7 @@ void setClock(int second, int minute, int hour, int dayOfWeek, int dayOfMonth, i
 
 If you look closely at your Tiny RTC module, you can see that it has a battery on board. This battery allows the module to remember the time you set for when you power your device again. Provided that the battery is in the sensor when you set the time, you won't need to set it again until the battery runs flat. However, there will be times to use this function you wrote, so where would you use it? The answer to this question is in your setup control loop. To set the time, type the current time into the input parameters for this function when you call it and you are good to go.
 
-Getting the time from the real time clock is similar to the way you set the clock.
-__TODO finish paragraph__
+Getting the time from the real time clock is similar to the way you set the clock. Rather than writing all the data to the clock through wire, we write a single byte with value 0 to the clock and then request the information by reading the wire. The function to read the time looks like below.
 
 ```c++
 void getTime(){
@@ -377,7 +376,8 @@ void printTime(){
   Serial.println(" ");    
 }
 ```
-__TODO write conclusion paragraph__
+
+Once you have everything together, compile and download the program to your Arduino. With any luck your program should be printing the time and date to serial. If it is, congratulations! You are now ready to add the segment display back into the circuit to display the time on this. If not, check your serial is on the right speed, and that you are reading and that you have wired your board in correctly.
 
 ### Building A Simple Clock
 
