@@ -6,14 +6,14 @@ This tutorial aims to answer all your questions about how an alarm clock works a
 
 Smart Alarm clocks have many capabilities that a normal alarm clock doesn't. For example, what if you never had to set an alarm again. Instead, your clock automatically looked at your calendar and chose the best possible time to wake you up? What if your clock could account for road closures and traffic and still get you up in time for work? All these are possible as you will see in the tutorial to come.
 
-For this tutorial you will need a fair few electronic components. Here is a list of all the components you will need to complete the entire tutorial: **TODO-Add Part Numbers to List**
+For this tutorial you will need a fair few electronic components. Here is a list of all the components you will need to complete the entire tutorial:
 
-- 1 x Arduino Uno
+- 1 x Arduino Uno Board
 - 1 x Raspberry Pi 3
-- 1 x **Arduino Addon Board**
-- 1 x 4 Digit 7 Segment Anode Display
-- 1 x Shift Register
-- 1 x Tiny RTC Module
+- 1 x [AlaMode Board](http://wyolum.com/projects/alamode/)
+- 1 x 4 Digit 7 Segment Anode Display (5461BS)
+- 1 x Shift Register (74HC595)
+- 1 x Tiny RTC Module (DS1307)
 - 1 x Barometer sensor (BMP180)
 - 3 x LEDs (different colours)
 - 5 x buttons
@@ -150,7 +150,7 @@ The choice of which is better is up to you, but in terms of size and cost for th
 
 ![shift_register image](/img/index.jpeg)
 
-Shift registers are a chip which allows for additional inputs into the circuit. Shift registers have two different functionalities. The first of these is to use serial communcication to collect information from sensors. The second functionality is to use parallel communication to allow for multi-pin output control. It is the latter function that we are going to use to drive the display.
+Shift registers are a chip which allows for additional inputs into the circuit. Shift registers have two different functionalities. The first of these is to use serial communication to collect information from sensors. The second functionality is to use parallel communication to allow for multi-pin output control. It is the latter function that we are going to use to drive the display.
 
 For this part of the tutorial we are going to introduce the shift register into the circuit and attempt to complete the same task as in the previous section, drawing zeros on the display. The circuit to construct should look similar to the one below.
 
@@ -395,7 +395,7 @@ void displayTime(){
 
 ### Measuring Temperature
 
-___TODO LEAD-IN/ INTRO. BE SURE TO MENTION THIS IS A BAROMETER SENSOR, BUT WE'RE JUST USING IT FOR THE HIGHLY ACCURATE DIGITAL TEMPERATURE VALUE. (you could also just use the DS18xx0 that's sitting in my electronics box like I originally suggested)___
+__TODO LEAD-IN/ INTRO. BE SURE TO MENTION THIS IS A BAROMETER SENSOR, BUT WE'RE JUST USING IT FOR THE HIGHLY ACCURATE DIGITAL TEMPERATURE VALUE. (you could also just use the DS18xx0 that's sitting in my electronics box like I originally suggested)__
 
 The data sheet can be found [here](https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf)
 
