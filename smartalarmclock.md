@@ -296,15 +296,16 @@ Looking at the sensor you will notice that there are two groups of input/output 
 
 This is a module that provides time and calendar date through what's called the I2C protocol. There are several libraries available online to interface with this sensor, for example [here](https://github.com/adafruit/RTClib/archive/master.zip) or  [here](https://www.elecrow.com/wiki/index.php?title=File:RTC.zip). For the purposes of learning about the sensor however, we are going to use the I2C pins on our Arduino and get the information manually.
 
-####Build the Circuit!
+#### Build the Circuit!
 
 By itself is very easy to wire into the Arduino. The first circuit we are going to build consequently is the one below (you can leave the rest of your wiring connected as long as it doesn't interfere with this circuit):
 
 ![TinyRTC circuit image](/img/tiny-rtc_bb.png)
 
-####Programming Time!
+#### Programming Time!
 
 This clock module has two different functionalities we are going to use, setting the time, and reading the time. But before we start writing functions to access these functionalities, we need to add our includes and declarations. To utilise our real time clock functionalities we need to include the ```Wire.h``` library. The [Wire Library](https://www.arduino.cc/en/Reference/Wire) is a standard Arduino library which allows you to communicate with I2C modules. It is more than likely that if you have used an I2C sensor before that you have used it. Because the real time clock uses I2C as its means for passing through data, instead of declaring the pins it is on, we need to tell the program what the address is through a defines method. Finally, we need to declare the variables we are going to use for our program. This section of the program should look similar to what is below.
+
 ```c++
 #include "Wire.h"
 
