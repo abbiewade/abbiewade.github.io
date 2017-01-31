@@ -25,7 +25,7 @@ For this tutorial you will need a fair few electronic components. Here is a list
 
 This tutorial does assume that you have some basic knowledge in the Arduino framework. As such, there is an assumption that you have spent some time familiarising yourself with an Arduino board and building circuits. Additionally, there is an assumption that you have a basic knowledge of programming in c++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. With these assumptions in place, the tutorial will walk you through an introduction of each new component introduced into the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
 
-__TODO: better explain the pins on each sensor, ...__
+__TODO: better explain the pins on each sensor, add more subheadings in, ...__
 
 ## Just Your Basic Clock
 
@@ -296,31 +296,34 @@ Looking at the sensor you will notice that there are two groups of input/output 
 
 This is a module that provides time and calendar date through what's called the I2C protocol. There are several libraries available online to interface with this sensor, for example [here](https://github.com/adafruit/RTClib/archive/master.zip) or  [here](https://www.elecrow.com/wiki/index.php?title=File:RTC.zip). For the purposes of learning about the sensor however, we are going to use the I2C pins on our Arduino and get the information manually.
 
+####Build the Circuit!
+
 By itself is very easy to wire into the Arduino. The first circuit we are going to build consequently is the one below (you can leave the rest of your wiring connected as long as it doesn't interfere with this circuit):
 
 ![TinyRTC circuit image](/img/tiny-rtc_bb.png)
 
-This clock module has two different functionalities we are going to use, setting the time, and reading the time.
+####Programming Time!
 
-
+This clock module has two different functionalities we are going to use, setting the time, and reading the time. But before we start writing functions to access these functionalities, we need to add our includes and declarations. To utilise our real time clock functionalities we need to include the ```Wire.h``` library. The [Wire Library](https://www.arduino.cc/en/Reference/Wire) is a standard Arduino library which allows you to communicate with I2C modules. It is more than likely that if you have used an I2C sensor before that you have used it. Because the real time clock uses I2C as its means for passing through data, instead of declaring the pins it is on, we need to tell the program what the address is through a defines method. Finally, we need to declare the variables we are going to use for our program. This section of the program should look similar to what is below.
 ```c++
 #include "Wire.h"
-#define RTC_Module 0x68  // the I2C address of Tiny RTC
-```
 
-```c++
+#define RTC_Module 0x68  // the I2C address of Tiny RTC
+
 byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
 ```
+
+Additionally, when using the Wire library, we need to make sure we start it in the setup control loop by writing ```Wire.begin();```.
+
+You may have gathered that the data from the real time clock is a stored in a byte from the code above. However, when we need to use the data from the clock, we need to be able to use a number in the base 10 number system (decimal). To do this we are going to do two helper functions that convert between decimal numbers and binary coded decimals (bytes).
 
 ```c++
 byte decToBcd(byte val){   return ( (val/10*16) + (val%10) );  }
 byte bcdToDec(byte val){   return ( (val/16*10) + (val%16) );  }
 ```
 
-To begin with, we are going to write a function to set the time of the clock.
-
+Now that we have all the structure in place, we are going to write a function to set the time of the clock. Setting the clock is very straight forward because of our conversion helper functions we wrote above. All we need to do is write it all the information is expects in the write order over the I2C bus.  
 ```c++
-// Function to set the current time, change the second,minute,hour to the right time
 void setClock(int second, int minute, int hour, int dayOfWeek, int dayOfMonth, int month, int year) {
     Wire.beginTransmission(RTC_Module);
     Wire.write(decToBcd(0));
@@ -334,6 +337,11 @@ void setClock(int second, int minute, int hour, int dayOfWeek, int dayOfMonth, i
     Wire.endTransmission();
 }
 ```
+
+If you look closely at your Tiny RTC module, you can see that it has a battery on board. This battery allows the module to remember the time you set for when you power your device again. Provided that the battery is in the sensor when you set the time, you won't need to set it again until the battery runs flat. However, there will be times to use this function you wrote, so where would you use it? The answer to this question is in your setup control loop. To set the time, type the current time into the input parameters for this function when you call it and you are good to go.
+
+Getting the time from the real time clock is similar to the way you set the clock.
+__TODO finish paragraph__
 
 ```c++
 void getTime(){
@@ -351,18 +359,7 @@ void getTime(){
 }
 ```
 
-```c++
-void displayTime(){
-    getTime();
-    int number = 100* hour + minute;
-    showDigits(number);   
-}
-```
-
-```c++
-Wire.begin();
-Serial.begin(9600);
-```
+Up to now, we haven't printed anything to the serial port, but that is about to change. Because we are working on a simple circuit without any display, we are just going to print it to the [Serial](https://www.arduino.cc/en/reference/serial). You may recall using serial from your first ```Hello World``` program on Arduino, but if you don't remember, you need to start your serial connection in your setup control loop by typing ```Serial.begin(19200);```. Once you have the serial running, we are going to write a function to print the time and date to serial, which looks like the one featured below.
 
 ```c++
 void printTime(){
@@ -380,10 +377,7 @@ void printTime(){
   Serial.println(" ");    
 }
 ```
-
-___TODO talk about battery and requirement for setting the time___
-
-___TODO talk about reading serial needing to be on a different frequency___
+__TODO write conclusion paragraph__
 
 ### Building A Simple Clock
 
@@ -391,7 +385,13 @@ Now that we understand how the clock module works, we are going to modify the ci
 
 ![Simple Clock Circuit Image](/img/simple-clock_bb.png)
 
-**Exercise 5**: Using the circuit above, join your clock code and display code to make the display read what the time is.
+**Exercise 5**: Using the circuit above, join your clock code and display code to make the display read what the time is. Your function should look similar to below.
+
+```c++
+void displayTime(){
+    // write your code here
+}
+```
 
 ### Measuring Temperature
 
