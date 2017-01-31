@@ -397,19 +397,21 @@ void displayTime(){
 
 ### Measuring Temperature
 
-__TODO LEAD-IN/ INTRO. BE SURE TO MENTION THIS IS A BAROMETER SENSOR, BUT WE'RE JUST USING IT FOR THE HIGHLY ACCURATE DIGITAL TEMPERATURE VALUE. (you could also just use the DS18xx0 that's sitting in my electronics box like I originally suggested)__
+Now that we have a simple clock working, we are going to add an extra sensor in - a pressure sensor. A pressure sensor is essentially a barometer which measures temperature, altitude and batrometric pressure. If you wanted to, you could use a standard sensor that only measures temperature, however this sensor is quite nice in that it has a highly accurate digital temperature reading and it is very easy to use. The pressure sensor looks similar to below and the data sheet can be found [here](https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf)
 
-The data sheet can be found [here](https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf)
-
-![Simple Alarm Clock Circuit Image](/img/bmp180.jpeg)
+![Pressure sensor](/img/bmp180.jpeg)
 
 There are two ways we can choose to program this particular sensor, from scratch using the I2C data, or using the [Adafruit Sensor Library](https://github.com/adafruit/Adafruit_Sensor). This seems like a perfect time in the tutorial to introduce using external Arduino libraries. Installing external libraries is a very simple process which involves downloading the packaged code from the source, and placing it in a correct folder. If you have never installed a library before, the Arduino Guide has an excellent explanation of how you can install different libraries which you can find [here](https://www.arduino.cc/en/Guide/Libraries).
 
 **Exercise 6**: Using the links in the paragraph above, install the Adafuit Sensor Library. Once you have finished, restart your Arduino IDE.
 
+#### Lets build us our circuit
+
 Now that you have all the correct libraries installed, it is time to build this sensor into our circuit! The circuit you need to build is featured below.
 
 ![](/img/temperatureClock_bb.png)
+
+#### Programming our Sensor
 
 To include the libraries in what we have done so far, we need to add the following include lines to the base code.
 
@@ -425,11 +427,9 @@ Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085); //barometer sensor
 float temperature;
 ```
 
-```c++
-    bmp.begin();
-```
+As the underlying code in the Adafruit library uses the ```Wire.h``` library, similarly we need to start the transmission using the```bmp.begin();``` command. This command needs to go in your setup control loop.
 
-Actually accessing the sensor values that are measured is super easy. To make our lives easier, we are going to write a function called ```displayTemperature``` which gets the temperature and displays it to screen for us. The code should look like below.
+Like learning the clock, we are first going to print out the temperature to the serial. Actually accessing the sensor values that are measured is super easy. To access the temperature, we use the object and store the value in the temperature variable we declared earlier. We then print it to the serial, as shown in the function below.
 
 ```c++
 void serialTemperature(){
@@ -439,8 +439,7 @@ void serialTemperature(){
 }
 ```
 
-__TODO EXPLAIN CODE ABOVE__
-
+To make our lives easier because we don't always want to just display the temperature to the Serial, we are going to write a function called ```displayTemperature``` which gets the temperature and displays it to screen for us. The code should look like below.
 
 ```c++
 void displayTemperature(){
