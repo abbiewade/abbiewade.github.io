@@ -25,7 +25,7 @@ For this tutorial you will need a fair few electronic components. Here is a list
 
 This tutorial does assume that you have some basic knowledge in the Arduino framework. As such, there is an assumption that you have spent some time familiarising yourself with an Arduino board and building circuits. Additionally, there is an assumption that you have a basic knowledge of programming in c++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. With these assumptions in place, the tutorial will walk you through an introduction of each new component introduced into the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
 
-__ TODO: better explain the pins on each sensor, ... __
+__TODO: better explain the pins on each sensor, ...__
 
 ## Just Your Basic Clock
 
@@ -159,16 +159,20 @@ For this part of the tutorial we are going to introduce the shift register into 
 As you can see from your now complete circuit, we have moved the connections from A-G and DP from the Arduino and wired them directly into the shift register. As such, the program needs to reflect this. Add the following to your #defines, making sure to remove the letters A-G and DP from the previous program:
 
 ```c++
-#define dataPin 5
-#define latchPin 6
-#define clockPin 7
+#define firstDigit  2
+#define secondDigit 3
+#define thirdDigit  4
+#define fourthDigit 5
+#define dataPin  6
+#define latchPin 7
+#define clockPin 8
 ```
 Similar to above, we also need to modify the setup function, making sure to remove the letters A-G and DP from the previous program.
 
 ```c++
-    pinMode(dataPin, OUTPUT);
-    pinMode(latchPin, OUTPUT);
-    pinMode(clockPin, OUTPUT);
+pinMode(dataPin, OUTPUT);
+pinMode(latchPin, OUTPUT);
+pinMode(clockPin, OUTPUT);
 ```
 
 To output data to the shift register, there is a simple one-line command that we need to learn - ```shiftOut(dataPin, clockPin, MSBFIRST, output_value)```. What this does is clock out the output values to the shift register, which in turn enables or disables its outputs accordingly. The ```output_value``` is an 8-bit binary value, which maps to the different segments. For example, the ```output_value``` for drawing zero would look like ```0b00000011```, which represents in a binary format the combination drawn in the table earlier in the tutorial (notice the inverted logic to what you'd expect!). By adding the binary value for each number as a constant at the top of your program, you can modify the helper function to look like the following:
@@ -176,16 +180,16 @@ To output data to the shift register, there is a simple one-line command that we
 ```c++
     const int zero  = 0b00000011;
 
-    void displayZero(){
+    void displayValue(byte value){
         digitalWrite(latchPin, LOW);
-        shiftOut(dataPin, clockPin, MSBFIRST, zero);
+        shiftOut(dataPin, clockPin, MSBFIRST, value);
         digitalWrite(latchPin, HIGH);
     }
 ```
 
 Similar to before, download the finished program onto your Arduino, and admire your display showing four zeros for the world to see!
 
-**Exercise 3**: Modify your helper functions above to use the binary structure and shift register to display the incrementing numbers, in the same pattern as Exercise 2!
+**Exercise 3**: Modify your program from exercise 2 to use binary structures and the function described above.
 
 ### 0000 to 9999
 
@@ -194,53 +198,62 @@ Up until now, we have been displaying the same number on all four digits of our 
 To start off, we are going to modify our program to contain the following helper function. The idea of this helper function is so that we can turn a integer value into the functions that we wrote earlier in this tutorial. The code should look something similar to below.
 
 ```c++
-void convertDigit (int digit) {
-  switch (digit) {
-      case 0: displayZero();   break;
-      case 1: displayOne();    break;
-      case 2: displayTwo();    break;
-      case 3: displayThree();  break;
-      case 4: displayFour();   break;
-      case 5: displayFive();   break;
-      case 6: displaySix();    break;
-      case 7: displaySeven();  break;
-      case 8: displayEight();  break;
-      case 9: displayNine();   break;
-      default:                 break;
-  }
+void convertDigit(int digit){
+    switch (digit) {
+        case 0: displayValue(zero);  break;
+        case 1: displayValue(one);   break;
+        case 2: displayValue(two);   break;
+        case 3: displayValue(three); break;
+        case 4: displayValue(four);  break;
+        case 5: displayValue(five);  break;
+        case 6: displayValue(six);   break;
+        case 7: displayValue(seven); break;
+        case 8: displayValue(eight); break;
+        case 9: displayValue(nine);  break;
+        default: displayValue(dp);   break;   
+    }
 }
 ```
 
 With this helper function implemented, we are going to write a function called ```showdigits``` which takes in a number and displays this number on screen. Since it is four digits, the easiest way to gain the individual digits to display is through division. If we divide the input number by 1000, we get the first digit. If we divide the input number by 100 we get the second digit, and so on. Using this idea, remainders when dividing and recursion, we can write the function below to display a four digit number.
 
 ```c++
-// showing 4 digits
-void showdigits (int number) {
-    convertDigit(number / 1000); // segments are set to display "1"
-    digitalWrite(firstDigit, HIGH);
+void showDigits(int number){
+    digitalWrite(firstDigit,  LOW);
     digitalWrite(secondDigit, LOW);
-    digitalWrite(thirdDigit, LOW);
+    digitalWrite(thirdDigit,  LOW);
     digitalWrite(fourthDigit, LOW);
-    delay (1);
 
-    number = number % 1000;
-    digitalWrite(firstDigit, LOW);
-    convertDigit(number / 100);
+    convertDigit(number/1000);
+    digitalWrite(firstDigit,  HIGH);
+    delay(1);
+
+    number = number%1000;
+    digitalWrite(firstDigit,  LOW);
+    delay(1);
+    convertDigit(number/100);
     digitalWrite(secondDigit, HIGH);
-    delay (1);
+    delay(1);
 
-    number = number % 100;
-    digitalWrite(secondDigit, LOW);
-    convertDigit(number / 10);
+    convertDigit(dp);
+    delay(1);
+
+    number = number%100;
+    digitalWrite(secondDigit,  LOW);
+    delay(1);
+    convertDigit(number/10);
     digitalWrite(thirdDigit, HIGH);
-    delay (1);
+    delay(1);
 
-    number = number % 10;
-    digitalWrite(thirdDigit, LOW);
+    number = number%10;
+    digitalWrite(thirdDigit,  LOW);
+    delay(1);
     convertDigit(number);
     digitalWrite(fourthDigit, HIGH);
-    delay (1);
+    delay(1);
+
     digitalWrite(fourthDigit, LOW);
+    delay(1);
 }
 ```
 
@@ -292,7 +305,7 @@ This clock module has two different functionalities we are going to use, setting
 
 ```c++
 #include "Wire.h"
-#define DS1307_I2C_ADDRESS 0x68  // the I2C address of Tiny RTC
+#define RTC_Module 0x68  // the I2C address of Tiny RTC
 ```
 
 ```c++
@@ -309,7 +322,7 @@ To begin with, we are going to write a function to set the time of the clock.
 ```c++
 // Function to set the current time, change the second,minute,hour to the right time
 void setClock(int second, int minute, int hour, int dayOfWeek, int dayOfMonth, int month, int year) {
-    Wire.beginTransmission(DS1307_I2C_ADDRESS);
+    Wire.beginTransmission(RTC_Module);
     Wire.write(decToBcd(0));
     Wire.write(decToBcd(second));    
     Wire.write(decToBcd(minute));
@@ -321,12 +334,13 @@ void setClock(int second, int minute, int hour, int dayOfWeek, int dayOfMonth, i
     Wire.endTransmission();
 }
 ```
+
 ```c++
 void getTime(){
-     Wire.beginTransmission(DS1307_I2C_ADDRESS);
+     Wire.beginTransmission(RTC_Module);
      Wire.write(decToBcd(0));
      Wire.endTransmission();
-     Wire.requestFrom(DS1307_I2C_ADDRESS, 7);
+     Wire.requestFrom(RTC_Module, 7);
      second     = bcdToDec(Wire.read() & 0x7f);
      minute     = bcdToDec(Wire.read());
      hour       = bcdToDec(Wire.read() & 0x3f);
@@ -338,20 +352,33 @@ void getTime(){
 ```
 
 ```c++
+void displayTime(){
+    getTime();
+    int number = 100* hour + minute;
+    showDigits(number);   
+}
+```
+
+```c++
+Wire.begin();
+Serial.begin(9600);
+```
+
+
+```c++
 void printTime(){
-    Serial.print(hour, DEC);
-    Serial.print(":");
-    Serial.print(minute, DEC);
-    Serial.print(":");
-    Serial.print(second, DEC);
-    Serial.print("  ");
-    Serial.print(month, DEC);
-    Serial.print("/");
-    Serial.print(dayOfMonth, DEC);
-    Serial.print("/");
-    Serial.print(year,DEC);
-    Serial.print("  ");
-    Serial.println();
+  Serial.print(hour, DEC);
+  Serial.print(":");
+  Serial.print(minute, DEC);
+  Serial.print(":");
+  Serial.print(second, DEC);
+  Serial.print(" ");
+  Serial.print(dayOfMonth, DEC);
+  Serial.print("/");
+  Serial.print(month, DEC);
+  Serial.print("/");
+  Serial.print(year, DEC);
+  Serial.println(" ");    
 }
 ```
 
@@ -394,17 +421,31 @@ Using this library means we can treat the sensor values similar to an object. As
 
 ```c++
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085); //barometer sensor
-sensors_event_t event;
 float temperature;
+```
+
+```c++
+    bmp.begin();
 ```
 
 Actually accessing the sensor values that are measured is super easy. To make our lives easier, we are going to write a function called ```displayTemperature``` which gets the temperature and displays it to screen for us. The code should look like below.
 
 ```c++
+void serialTemperature(){
+    bmp.getTemperature(&temperature);
+    Serial.print(temperature);
+    Serial.println("* C");    
+}
+```
+
+__TODO EXPLAIN CODE ABOVE__
+
+
+```c++
 void displayTemperature(){
     bmp.getTemperature(&temperature);
-    temperature*=100;
-    showdigits((int)temperature);
+    temperature = temperature * 100;
+    showDigits((int)temperature);  
 }
 ```
 
