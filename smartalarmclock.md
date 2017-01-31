@@ -6,6 +6,12 @@ This tutorial aims to answer all your questions about how an alarm clock works a
 
 Smart Alarm clocks have many capabilities that a normal alarm clock doesn't. For example, what if you never had to set an alarm again. Instead, your clock automatically looked at your calendar and chose the best possible time to wake you up? What if your clock could account for road closures and traffic and still get you up in time for work? All these are possible as you will see in the tutorial to come.
 
+This tutorial does assume that you have some basic knowledge in the Arduino framework. As such, there is an assumption that you have spent some time familiarising yourself with an Arduino board and building circuits. Additionally, there is an assumption that you have a basic knowledge of programming in c++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. With these assumptions in place, the tutorial will walk you through an introduction of each new component introduced into the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
+
+__TODO: better explain the pins on each sensor__
+
+## What you are Going to Need
+
 For this tutorial you will need a fair few electronic components. Here is a list of all the components you will need to complete the entire tutorial:
 
 - 1 x Arduino Uno Board
@@ -22,10 +28,6 @@ For this tutorial you will need a fair few electronic components. Here is a list
 - 5 x 1Mohm resisters
 - 3 x 220ohm resisters
 - Breadboard + Wires
-
-This tutorial does assume that you have some basic knowledge in the Arduino framework. As such, there is an assumption that you have spent some time familiarising yourself with an Arduino board and building circuits. Additionally, there is an assumption that you have a basic knowledge of programming in c++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. With these assumptions in place, the tutorial will walk you through an introduction of each new component introduced into the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
-
-__TODO: better explain the pins on each sensor, add more subheadings in, ...__
 
 ## Just Your Basic Clock
 
@@ -152,9 +154,13 @@ The choice of which is better is up to you, but in terms of size and cost for th
 
 Shift registers are a chip which allows for additional inputs into the circuit. Shift registers have two different functionalities. The first of these is to use serial communication to collect information from sensors. The second functionality is to use parallel communication to allow for multi-pin output control. It is the latter function that we are going to use to drive the display.
 
+#### Build the circuit!
+
 For this part of the tutorial we are going to introduce the shift register into the circuit and attempt to complete the same task as in the previous section, drawing zeros on the display. The circuit to construct should look similar to the one below.
 
 ![ShiftRegister7segment4digitDisplay image](/img/ShiftRegister7segment4digitDisplay_bb.png)
+
+#### Time to for control
 
 As you can see from your now complete circuit, we have moved the connections from A-G and DP from the Arduino and wired them directly into the shift register. As such, the program needs to reflect this. Add the following to your #defines, making sure to remove the letters A-G and DP from the previous program:
 
@@ -296,13 +302,13 @@ Looking at the sensor you will notice that there are two groups of input/output 
 
 This is a module that provides time and calendar date through what's called the I2C protocol. There are several libraries available online to interface with this sensor, for example [here](https://github.com/adafruit/RTClib/archive/master.zip) or  [here](https://www.elecrow.com/wiki/index.php?title=File:RTC.zip). For the purposes of learning about the sensor however, we are going to use the I2C pins on our Arduino and get the information manually.
 
-#### Build the Circuit!
+#### Build the circuit!
 
 By itself is very easy to wire into the Arduino. The first circuit we are going to build consequently is the one below (you can leave the rest of your wiring connected as long as it doesn't interfere with this circuit):
 
 ![TinyRTC circuit image](/img/tiny-rtc_bb.png)
 
-#### Programming Time!
+#### Time to for control
 
 This clock module has two different functionalities we are going to use, setting the time, and reading the time. But before we start writing functions to access these functionalities, we need to add our includes and declarations. To utilise our real time clock functionalities we need to include the ```Wire.h``` library. The [Wire Library](https://www.arduino.cc/en/Reference/Wire) is a standard Arduino library which allows you to communicate with I2C modules. It is more than likely that if you have used an I2C sensor before that you have used it. Because the real time clock uses I2C as its means for passing through data, instead of declaring the pins it is on, we need to tell the program what the address is through a defines method. Finally, we need to declare the variables we are going to use for our program. This section of the program should look similar to what is below.
 
@@ -405,13 +411,13 @@ There are two ways we can choose to program this particular sensor, from scratch
 
 **Exercise 6**: Using the links in the paragraph above, install the Adafuit Sensor Library. Once you have finished, restart your Arduino IDE.
 
-#### Lets build us our circuit
+#### Building our Circuit
 
 Now that you have all the correct libraries installed, it is time to build this sensor into our circuit! The circuit you need to build is featured below.
 
 ![](/img/temperatureClock_bb.png)
 
-#### Programming our Sensor
+#### Time to for Control
 
 To include the libraries in what we have done so far, we need to add the following include lines to the base code.
 
