@@ -1,5 +1,7 @@
 # Building a Smart Alarm Clock
 
+__TODO fix fritzing diagrams to have the correct pins__
+
 If you are anything like me you hate waking up in the mornings and your alarm clock is your worst nightmare. The dreaded _"beep. beep. beep."_ in the morning is enough to drive anyone insane. But how does it all work? Is there a way we can make it smarter to maximise the amount of sleep you can get every morning?
 
 This tutorial aims to answer all your questions about how an alarm clock works and what you can do to maximise your sleeping time. So, in this tutorial we are going to build a smart alarm clock from the ground up! What this means is we are going to start with simple electronic components and first build a _dumb_ alarm clock. Once we complete this challenge, we are then going to take what we originally built and connect it to the internet to make it _smart_.
@@ -7,8 +9,6 @@ This tutorial aims to answer all your questions about how an alarm clock works a
 Smart Alarm clocks have many capabilities that a normal alarm clock doesn't. For example, what if you never had to set an alarm again. Instead, your clock automatically looked at your calendar and chose the best possible time to wake you up? What if your clock could account for road closures and traffic and still get you up in time for work? All these are possible as you will see in the tutorial to come.
 
 This tutorial does assume that you have some basic knowledge in the Arduino framework. As such, there is an assumption that you have spent some time familiarising yourself with an Arduino board and building circuits. Additionally, there is an assumption that you have a basic knowledge of programming in c++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. With these assumptions in place, the tutorial will walk you through an introduction of each new component introduced into the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
-
-__TODO: better explain the pins on each sensor__
 
 ## What you are Going to Need
 
@@ -40,6 +40,10 @@ While we call this a 7 segment display, technically there are 8 LED segments tha
 
 ![4-digit_7-segment_display image](/img/DI-0017_2.jpg)
 
+7 Segment displays come in two varieties - common _anode_ and common _cathode_. Both display types contain the word '_common_' in front of them. This simply refers to the fact that for all the LED segments on a digit are linked by at one end. The common _anode_ variant links the LEDs at the ```VCC/VDD``` (+V) line rather than at ```VEE/VSS/GND``` (0V), which means that if you wish to turn an LED on, you need to power all of the LEDs, and only ground the segments you want to light up.
+
+The cathode is the opposite to the anode, where the common LED connection is at the GND line, and a ```HIGH``` value is used to turn on each individual segment. Ultimately, there is no difference in functionality of the two kinds, you just need to invert the logic for your program if the LED segments do the opposite of what you expect! For the remainder of this project we are going to assume when talking about any 7 segment display that it is of the common _anode_ variety.
+
 A 7 segment display works by assigning different lettering to each segment, as shown in the image below. What this means is that if you set the pin attached to ```A``` to ```LOW``` then it will turn on.
 
 ![7-segment_display lettering image](/img/7-segment display.png)
@@ -58,10 +62,6 @@ Different combinations of different segments lighting up make different shapes. 
 | 7     | ||||||||
 | 8     | ||||||||
 | 9     | ||||||||
-
-7 Segment displays come in two varieties - common _anode_ and common _cathode_. Both display types contain the word '_common_' in front of them. This simply refers to the fact that for all the LED segments on a digit are linked by at one end. The common _anode_ variant links the LEDs at the ```VCC/VDD``` (+V) line rather than at ```VEE/VSS/GND``` (0V), which means that if you wish to turn an LED on, you need to power all of the LEDs, and only ground the segments you want to light up.
-
-The cathode is the opposite to the anode, where the common LED connection is at the GND line, and a ```HIGH``` value is used to turn on each individual segment. Ultimately, there is no difference in functionality of the two kinds, you just need to invert the logic for your program if the LED segments do the opposite of what you expect! For the remainder of this project we are going to assume when talking about any 7 segment display that it is of the common _anode_ variety.
 
 #### Build the circuit!
 
