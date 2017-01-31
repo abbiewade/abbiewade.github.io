@@ -161,29 +161,19 @@ Up until now, we have been displaying the same number on all four digits of our 
 To start off with, we are going to modify our program to contain the following helper function. The idea of this helper function is so that we can turn a integer value into the functions that we wrote earlier in this tutorial. The code should look something similar to below.
 
 ```c++
-void showdigit (int digit) {
+void convertDigit (int digit) {
   switch (digit) {
-      case 0: displayZero();
-          break;
-      case 1: displayOne();
-          break;
-      case 2: displayTwo();
-          break;
-      case 3: displayThree();
-          break;
-      case 4: displayFour();
-          break;
-      case 5: displayFive();
-          break;
-      case 6: displaySix();
-          break;
-      case 7: displaySeven();
-          break;
-      case 8: displayEight();
-          break;
-      case 9: displayNine();
-          break;
-      default: break;
+      case 0: displayZero();   break;
+      case 1: displayOne();    break;
+      case 2: displayTwo();    break;
+      case 3: displayThree();  break;
+      case 4: displayFour();   break;
+      case 5: displayFive();   break;
+      case 6: displaySix();    break;
+      case 7: displaySeven();  break;
+      case 8: displayEight();  break;
+      case 9: displayNine();   break;
+      default:                 break;
   }
 }
 ```
@@ -193,7 +183,7 @@ With this helper function implemented, we are going to write a function called `
 ```c++
 // showing 4 digits
 void showdigits (int number) {
-    showdigit(number / 1000); // segments are set to display "1"
+    convertDigit(number / 1000); // segments are set to display "1"
     digitalWrite(firstDigit, HIGH);
     digitalWrite(secondDigit, LOW);
     digitalWrite(thirdDigit, LOW);
@@ -202,19 +192,19 @@ void showdigits (int number) {
 
     number = number % 1000;
     digitalWrite(firstDigit, LOW);
-    showdigit(number / 100);
+    convertDigit(number / 100);
     digitalWrite(secondDigit, HIGH);
     delay (1);
 
     number = number % 100;
     digitalWrite(secondDigit, LOW);
-    showdigit(number / 10);
+    convertDigit(number / 10);
     digitalWrite(thirdDigit, HIGH);
     delay (1);
 
     number = number % 10;
     digitalWrite(thirdDigit, LOW);
-    showdigit(number);
+    convertDigit(number);
     digitalWrite(fourthDigit, HIGH);
     delay (1);
 }
@@ -396,7 +386,7 @@ This code does three tasks. The first task gets the temperature values and store
 
 **Exercise 8**: Modify your code such that it can deal with negative temperatures being displayed.
 
-**Exercise 9**: Modify your code such that if the button is pressed, the display will show the temperature and turn on the LED. If the button is not pressed, it will display the time and turn off the LED. 
+**Exercise 9**: Modify your code such that if the button is pressed, the display will show the temperature and turn on the LED. If the button is not pressed, it will display the time and turn off the LED.
 
 ### Extra Functionalities
 Congratulations, you have now built a simple alarm clock which has the capability of measuring temperature. By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Additionally, you may want to consider using a piezo sensor to simulate the alarm sound, which can be wired into your circuit similar to the image below. Piezo sensors are programmed identically to LEDs, where ```HIGH``` will make the sensor emit a noise, and ```LOW``` will turn the sound off.
