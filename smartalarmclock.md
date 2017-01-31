@@ -324,6 +324,7 @@ byte bcdToDec(byte val){   return ( (val/16*10) + (val%16) );  }
 ```
 
 Now that we have all the structure in place, we are going to write a function to set the time of the clock. Setting the clock is very straight forward because of our conversion helper functions we wrote above. All we need to do is write it all the information is expects in the write order over the I2C bus.  
+
 ```c++
 void setClock(int second, int minute, int hour, int dayOfWeek, int dayOfMonth, int month, int year) {
     Wire.beginTransmission(RTC_Module);
