@@ -504,8 +504,32 @@ To start this ball rolling, we first need to get the Raspberry Pi and AlaMode bo
 **Exercise 13:** Follow the AlaMode tutorial to set up the board, and run the Blink Example from Arduino to test that it is working.
 
 ### Checking previous old Arduino Code
-__TODO__
+As has been alluded above, the AlaMode is essentially an Arduino in disguise. What this means is that your code from the first part of this tutorial should run perfectly if you move the pins over from your Arduino to the corresponding pins on the AlaMode board. We are going to use this as a perfect opportunity to check that your wiring is the same as the remainder of the tutorials. Please keep in mind that the RTC module and the pressure sensor are not displayed in the pin define section as they are both hooked into the SDA/SCL pins which run the I2C busses. The defined pins that will be used for the remainder of the tutorial are as follows.
 
+```c++
+#define firstDigit  2
+#define secondDigit 3
+#define thirdDigit  4
+#define fourthDigit 5
+
+#define dataPin     6
+#define latchPin    7
+#define clockPin    8
+
+#define button1     9
+#define button2    10
+#define button3    11
+#define button4    12
+#define button5    13
+
+#define LEDred     A0
+#define LEDyellow  A1
+#define LEDgreen   A2
+
+#define piezo      A3
+```
+
+**Exercise XX:** Move all your wires from your Arduino to the AlaMode board and run your code. Ensure that you have left pin 0 and 1 free for future use, and that your pins match to the allocated pins above.
 
 #### Swapping the Real Time Clock Module
 __TODO__
