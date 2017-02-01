@@ -1,7 +1,5 @@
 # Building a Smart Alarm Clock
 
-__TODO fix fritzing diagrams to have the correct pins__
-
 If you are anything like me you hate waking up in the mornings and your alarm clock is your worst nightmare. The dreaded _"beep! beep! beep!"_ in the morning is enough to drive anyone insane. But how does it all work? Is there a way we can make it smarter to maximise the amount of sleep you can get every morning?
 
 This tutorial aims to answer all your questions about how a smart alarm clock works and what you can do to maximise your sleeping time. To accomplish this, in this tutorial we are going to build a smart alarm clock from the ground up! We are going to start with simple electronic components and first build a _dumb_ alarm clock. Once we complete this challenge, we are then going to take what we originally built and connect it to the Internet to make it _smart_.
@@ -657,7 +655,7 @@ def main():
     while True:
         nowutc = datetime.datetime.utcnow()
         now = utc_to_local(nowutc)
-        nowstr = nowutc.isoformat() + 'Z' 
+        nowstr = nowutc.isoformat() + 'Z'
 
         eventsResult = service.events().list(
             calendarId='primary', timeMin=nowstr, maxResults=3, singleEvents=True,
