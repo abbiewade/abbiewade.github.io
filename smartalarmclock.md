@@ -483,6 +483,8 @@ Congratulations, you have now built a simple alarm clock which has the capabilit
 **Exercise 12**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
 
 ## Making Your Clock Smart
+So I guess now is the time to start asking why we should bother connecting devices to the internet. The answer to this is very simple. By connecting our project to the internet, we have the ability to communicate, interact and collaborate with the world wide web to make our device more smart. We get the ability to store collected data in data centres to use later. We can combine current sensor data and internet data to get more accurate information about what we are sensing. So, in short, by utilising the internet, we can grow our project to interact further with the world. 
+
 When deciding to make your electronic projects connected to the internet, you have a lot of choices for how you are going to do this. One of the most common choices is whether you should use a shield for your project to hook your current setup to the internet, or introduce another method which has internet capabilities. Realistically, both options have strengths and weaknesses, and how you connect a project to the internet is very dependent on what your project is. There are even times where you would want to use multiple solutions together.
 
 Underneath all the hype, an Arduino is just a microprocessor, designed to control simple projects which are relatively small in size. It is perfect for projects up to the size of what we have currently done. It has no network capabilities when using the standard Arduino Uno, limited processing capabilities and is limited by the fact that it can not run multiple different programs at the same time. This is where the Raspberry Pi comes into the picture.
@@ -529,7 +531,7 @@ As has been alluded above, the AlaMode is essentially an Arduino in disguise. Wh
 #define piezo      A3
 ```
 
-**Exercise XX:** Move all your wires from your Arduino to the AlaMode board and run your code. Ensure that you have left pin 0 and 1 free for future use, and that your pins match to the allocated pins above.
+**Exercise 14:** Move all your wires from your Arduino to the AlaMode board and run your code. Ensure that you have left pin 0 and 1 free for future use, and that your pins match to the allocated pins above.
 
 #### Swapping the Real Time Clock Module
 __TODO get code off raspberry pi and write this section up__
@@ -541,7 +543,7 @@ The _smart_ feature we are going to add into our clock is to modify our alarms f
 
 Like the AlaMode board, a good tutorial for setting up the Google Calendars API already exists [here](https://developers.google.com/google-apps/calendar/quickstart/python).
 
-**Exercise XX:** Follow the Google Calendar API Python tutorial to set up the APIs, and run the example from step 3 to ensure that it works correctly.
+**Exercise 15:** Follow the Google Calendar API Python tutorial to set up the APIs, and run the example from step 3 to ensure that it works correctly.
 
 #### Serial Communication
 Up to now, you have more than likely used the Serial communication to print things out in the serial monitor, such as the time or temperature earlier. This functionality of printing out data is just scraping the top of the barrel for what the Serial library can do.
@@ -610,11 +612,14 @@ With all this code in place, our Arduino side of the program is ready to go. All
 __TODO get code off raspberry pi and write this section up__
 
 #### Putting it All Together
+Now that you have everything up and going, it is just a matter of running the two programs at the same time. Start off by getting the Arduino side of the project uploaded to the board. Once that is running, then start the python code running in your terminal.
 
-__TODO running the entire thing together__
+To test that your alarm clock is indeed working, you need to log into your google calendar and make sure there is an event in your calendar for a few minutes time before you start your python code. Provided you do this for the first time (as this will trigger the first alarm), then your clock is up and running perfectly.
+
+The way that we choose the alarms in the python script will not work for everyone, and there are a lot smarter ways to do this. For example, maybe you actually want to wake up 30 minutes before the event starts, or only have an alarm if the name of the event in your calendar is called "Alarm". It is entirely up to your personal preference what works best for you and you are highly encouraged now that you have a framework to experiment.
 
 ## Final Remarks
-Congratulations on building your first smart alarm clock. You now have a device that will wake you up based on your alarm clock. Throughout this tutorial you have learned the basics of using segmented displays, shift registers, real time clock modules,
+Congratulations on building your first smart alarm clock. You now have a device that will wake you up based on your alarm clock. Throughout this tutorial you have learned the basics of using segmented displays, shift registers, real time clock modules, use the serial communication and hook your projects up to the internet!
 
 But you shouldn't stop here. There are still millions of directions you could take your smart clock. So here are some ideas to get you started. Keep in mind that not all of these future challenges are easy, and some will require more learning of new and different sensors. However, that shouldn't stop the fun.
 
