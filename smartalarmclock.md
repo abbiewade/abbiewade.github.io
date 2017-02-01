@@ -544,8 +544,61 @@ Like the AlaMode board, a good tutorial for setting up the Google Calendars API 
 **Exercise XX:** Follow the Google Calendar API Python tutorial to set up the APIs, and run the example from step 3 to ensure that it works correctly.
 
 #### Serial Communication
+Up to now, you have more than likely used the Serial communication to print things out in the serial monitor, such as the time or temperature earlier. This functionality of printing out data is just scraping the top of the barrel for what the Serial library can do.
 
-__TODO__
+The [Serial](https://www.arduino.cc/en/reference/serial) library allows for communication between multiple Arduinos, an Arduino and other programs, or even the user and the Arduino.
+
+__TODO FINISH SECTION__
+
+#### Setting up the Arduino Side
+For the purpose of integrating Google Calendars with Python to our Arduino code, we are going to exclusively look at using Serial to integrate with a python program. This section will walk through a simple alarm set up, however you are more than welcome to integrate your code from earlier in the tutorial.
+
+To add an alarm into our program, you will need to have two variables which you can access. The first one is to symbolise whether your alarm is set or not, and the second is what time the alarm is set to.
+```c++
+bool alarmIsSet = false;
+int alarmTime = 0;
+```
+
+Once we have these two variables set up, the next thing we have to do is to set up our main control loop. If you are working off the base code, you will have one if-else statement related to displaying the time or temperature in your main control loop. This is content that we still need to keep in our program, and what we need to add is to sit directly after it. There are two checks that we need to perform. The first is that if there is anything currently available in the serial communication channel that we need to read (in other words, a new alarm time). If there is, we need to tell the Arduino side of this project that an alarm is set, and then read what the time is and store that value. The second thing we need to check is that if there is an alarm set, does it need to go off. The code to add to the control loop looks similar to below.
+
+```c++
+if (Serial.available() > 0) {
+    alarmIsSet = true;
+    setAlarm(Serial.read());
+}
+
+if(alarmIsSet){
+    checkAlarm();
+}
+```
+
+For now, we will assume that the python side of our program will deal with sending a correctly formatted time, so
+```c++
+void setAlarm(int time){
+    alarmTime = time;
+    digitalWrite(LEDgreen, HIGH);
+}
+```
+
+```c++
+void checkAlarm(){
+    // get the current time
+    getTime();
+    int goOffAt = 100*hour + minute;
+    if(goOffAt >= alarmTime){
+        // make an alarm sound
+        digitalWrite(piezo, HIGH);
+
+        // wait for the alarm to be turned off
+        while(digitalRead(button1) != HIGH){}
+
+        // reset alarm related variables
+        digitalWrite(piezo, LOW);
+        digitalWrite(LEDgreen, LOW);
+        alarmIsSet = false;
+    }
+}
+```
 
 #### Putting it All Together
 
