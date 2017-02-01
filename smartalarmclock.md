@@ -20,7 +20,7 @@ With these assumptions in place, the tutorial will walk you through an introduct
 
 This tutorial is designed to walk you through everything you need to know to build a simple smart clock.
 
-__TODO finish__ 
+__TODO finish__
 
 ## What you are Going to Need
 
@@ -501,6 +501,13 @@ The AlaMode board, pictured below, is essentially an expansion board for the Ras
 ![AlaMode Board](/img/alamode.jpg)
 
 The best thing about this board though is that it has an inbuilt real time clock, which the Raspberry Pi doesn't have, and as you have seen, a normal Arduino doesn't have either. Like all electronics, the Alamode also has a datasheet which you can find [here](http://wyolum.com/docs/Alamode/AlaMode_V1datasheet.pdf).
+
+### Converting our Simple Clock to the Raspberry Pi
+
+To start this ball rolling, we first need to get the Raspberry Pi and AlaMode board speaking to each other. Wyolum, the creaters of the AlaMode, have a good [Getting Started](http://wyolum.com/projects/alamode/alamode-getting-started/) introduction of how to set up the AlaMode board on the Raspberry Pi. It is easy to follow and successfully sets up the board in one attempt.
+
+**Exercise 13:** Follow the AlaMode tutorial to set up the board, and run the Blink Example from Arduino to test that it is working.
+
 
 ### Connecting our Simple Clock to the Raspberry Pi
 
