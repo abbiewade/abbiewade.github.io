@@ -20,7 +20,11 @@ With these assumptions in place, the tutorial will walk you through an introduct
 
 This tutorial is designed to walk you through everything you need to know to build a simple smart clock.
 
-__TODO finish__
+Initially we are going to start by building a clock from scratch hooked up to an Arduino. We are going to go through segment displays, shift registers, RTC modules and pressure sensors to fully achieve what a simple alarm clock looks like underneath.
+
+Once we have gone through the steps of building an Arduino clock, we will port the work we did on the Arduino to a AlaMode board and Raspberry Pi. Here we are going to hook google calendars into the project to see how we can use the internet to make our device smarter.
+
+This tutorial will end by giving some ideas where to take the project at the conclusion of this tutorial. 
 
 ## What you are Going to Need
 
@@ -508,7 +512,6 @@ To start this ball rolling, we first need to get the Raspberry Pi and AlaMode bo
 
 **Exercise 13:** Follow the AlaMode tutorial to set up the board, and run the Blink Example from Arduino to test that it is working.
 
-
 ### Connecting our Simple Clock to the Raspberry Pi
 
 ### Checking previous old Arduino Code
@@ -596,11 +599,10 @@ You will notice that we have used two helper functions in the code above. We are
 
 ```c++
 void setAlarm(char* time){
-    TODO ABBIE FIX THIS TO BE PROPER I CAN'T REMEMBER HOW TO DO THIS OFF THE TOP OF MY HEAD, SOMETHING LIKE THIS THOUGH
-    int hour, minute, second
-    snprintf(time,"%d:%d:%d", hour, minute, second);    
-    alarmTime = hour * 100 + second;
-    digitalWrite(LEDgreen, HIGH);
+  int hour, minute, second;
+  snprintf(time,"%d:%d:%d", hour, minute, second);    
+  alarmTime = hour * 100 + second;
+  digitalWrite(LEDgreen, HIGH);
 }
 ```
 
@@ -631,7 +633,56 @@ With all this code in place, our Arduino side of the program is ready to go. All
 
 #### Getting and Sending the Alarm Details in python
 
-__TODO get code off raspberry pi and write this section up__
+To make our lives easier, we are going to start this base code from the google tutorial example from when we set up the APIs. There are two different things we need to modify. The first of these is we need to include two additional inputs for the time and calendar library, like below.
+
+```python
+import time
+import calendar
+```
+
+The next part we need to change is the main loop. In the example, the code only ran through once and got the upcoming 10 events. What we want to do is work out when the next alarm should be set based on the upcoming events, and we want to keep running this program forever. Additionally, when we work out what alarm we want to set, we need to send it over serial to the Arduino. Most of the code should look familiar from when you saw and red through the google code. What is different in this tutorials case is the structure and logic to determine whether to set an alarm or not. The code for your main loop should look like what is below.
+
+```python
+def main():
+    credentials = get_credentials()
+    http = credentials.authorize(httplib2.Http())
+    service = discovery.build('calendar', 'v3', http=http)
+
+    haveAlarmToday = False;
+    alarmTime = None
+    midnight = datetime.datetime.strptime("00:00:00", '%H:%M:%S')
+
+    serialPort = serial.Serial('/dev/ttyS0')
+
+    while True:
+        nowutc = datetime.datetime.utcnow()
+        now = utc_to_local(nowutc)
+        nowstr = nowutc.isoformat() + 'Z' # 'Z' indicates UTC time
+
+        eventsResult = service.events().list(
+            calendarId='primary', timeMin=nowstr, maxResults=3, singleEvents=True,
+            orderBy='startTime').execute()
+        events = eventsResult.get('items', [])
+
+        for event in events:
+            start = event['start'].get('dateTime', event['start'].get('date'))
+            eventtime=datetime.datetime.strptime(start.replace('T', ' ').split('+')[0], "%Y-%m-%d %H:%M:%S")
+            print(start, eventtime, event['description'])
+
+            if eventtime.date() == now.date() and not haveAlarmToday:
+                alarmTime = eventtime.time()
+                haveAlarmToday = True
+
+        if haveAlarmToday:
+            serialPort.write(alarmTime);
+
+        if now.time().hour == midnight.time().hour and now.time().minute == midnight.time().minute:
+            haveAlarmToday = False
+
+        time.sleep(60); #check every minute
+```
+
+Just like every python script, this needs to be started in terminal using ```python 2.7```. Once you have your code compiling, you are ready to move on to join the entire project up together.
 
 #### Putting it All Together
 Now that you have everything up and going, it is just a matter of running the two programs at the same time. Start off by getting the Arduino side of the project uploaded to the board. Once that is running, then start the python code running in your terminal.
