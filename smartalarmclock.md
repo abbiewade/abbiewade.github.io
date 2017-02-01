@@ -483,7 +483,7 @@ Congratulations, you have now built a simple alarm clock which has the capabilit
 **Exercise 12**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
 
 ## Making Your Clock Smart
-So I guess now is the time to start asking why we should bother connecting devices to the internet. The answer to this is very simple. By connecting our project to the internet, we have the ability to communicate, interact and collaborate with the world wide web to make our device more smart. We get the ability to store collected data in data centres to use later. We can combine current sensor data and internet data to get more accurate information about what we are sensing. So, in short, by utilising the internet, we can grow our project to interact further with the world. 
+So I guess now is the time to start asking why we should bother connecting devices to the internet. The answer to this is very simple. By connecting our project to the internet, we have the ability to communicate, interact and collaborate with the world wide web to make our device more smart. We get the ability to store collected data in data centres to use later. We can combine current sensor data and internet data to get more accurate information about what we are sensing. So, in short, by utilising the internet, we can grow our project to interact further with the world.
 
 When deciding to make your electronic projects connected to the internet, you have a lot of choices for how you are going to do this. One of the most common choices is whether you should use a shield for your project to hook your current setup to the internet, or introduce another method which has internet capabilities. Realistically, both options have strengths and weaknesses, and how you connect a project to the internet is very dependent on what your project is. There are even times where you would want to use multiple solutions together.
 
@@ -546,14 +546,29 @@ Like the AlaMode board, a good tutorial for setting up the Google Calendars API 
 **Exercise 15:** Follow the Google Calendar API Python tutorial to set up the APIs, and run the example from step 3 to ensure that it works correctly.
 
 #### Serial Communication
-Up to now, you have more than likely used the Serial communication to print things out in the serial monitor, such as the time or temperature earlier. This functionality of printing out data is just scraping the top of the barrel for what the Serial library can do.
+Up to now, you have more than likely used the Serial communication to print things out in the serial monitor, such as the time or temperature earlier. This functionality of printing out data is just scraping the top of the barrel for what the Serial library can do. Serial is a protocol which allows us to pass information between different parts of a project. The [Serial](https://www.arduino.cc/en/reference/serial) library allows for communication between multiple Arduinos, an Arduino and other programs, or even the user and the Arduino.
 
-The [Serial](https://www.arduino.cc/en/reference/serial) library allows for communication between multiple Arduinos, an Arduino and other programs, or even the user and the Arduino.
+In our project of building a smart alarm clock, the Arduino is going to be receiving data. What this means is we are going to be reading in bytes from the serial channel and then do something with it. So to begin with, we are going to go on a tangent and build the following small program to experiment with. All this program does is wait for some information to be passed to the serial, and then echoes it back onto the serial communication.
 
-__TODO FINISH SECTION__
+```c++
+byte text;
+
+void setup() {                
+  Serial.begin(9600);
+}
+
+void loop() {
+    if (Serial.available()) {
+        text = Serial.read();
+        Serial.write(text);
+    }
+}
+```
+
+Once you have uploaded this sketch onto your Arduino, open up the serial communication window and type a message to the Arduino. Once you press send, you should see the same message reflected back in the window. In this example, the Arduino is reading data that we manually type to it. But as said earlier, the Arduino is not just limited to this type of communication. In the upcoming sections, we are going to use a similar idea on the Arduino code. Thus, for the purpose of integrating Google Calendars with Python to our Arduino code, we are going to exclusively look at using Serial to integrate with a python program.
 
 #### Setting up the Arduino Side
-For the purpose of integrating Google Calendars with Python to our Arduino code, we are going to exclusively look at using Serial to integrate with a python program. This section will walk through a simple alarm set up, however you are more than welcome to integrate your code from earlier in the tutorial.
+This section will walk through a simple alarm set up in your Arduino code, however you are more than welcome to integrate your code from earlier in the tutorial.
 
 To add an alarm into our program, you will need to have two variables which you can access. The first one is to symbolise whether your alarm is set or not, and the second is what time the alarm is set to.
 ```c++
