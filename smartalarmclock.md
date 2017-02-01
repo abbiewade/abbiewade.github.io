@@ -6,13 +6,13 @@ If you are anything like me you hate waking up in the mornings and your alarm cl
 
 This tutorial aims to answer all your questions about how a smart alarm clock works and what you can do to maximise your sleeping time. To accomplish this, in this tutorial we are going to build a smart alarm clock from the ground up! We are going to start with simple electronic components and first build a _dumb_ alarm clock. Once we complete this challenge, we are then going to take what we originally built and connect it to the internet to make it _smart_.
 
-Smart Alarm clocks have a lot more functionality that a normal alarm clock would never be able to match. For example, what if you never had to set an alarm again?  Instead, your clock automatically looked at your calendar and chose the best possible time to wake you up! What if your clock could account for road closures and traffic and still get you up in time for work? All these are possible as you will see in the tutorial to come. ___ARE YOU COVERING ROAD CLOSURES AND TRAFFIC?!___
+Smart Alarm clocks have a lot more functionality that a normal alarm clock would never be able to match. For example, what if you never had to set an alarm again?  Instead, your clock automatically looked at your calendar and chose the best possible time to wake you up! What if your clock could account for road closures and traffic and still get you up in time for work? While only some of these solutions will be introduced in this tutorial, you will come to see that all are possible with a bit of programming.
 
 This tutorial does assume some things:
 
 - You have some basic knowledge with the Arduino framework
 - You have spent some time familiarising yourself with an Arduino board and building circuits
-- You have a basic knowledge of programming in C++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. 
+- You have a basic knowledge of programming in C++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons.
 
 With these assumptions in place, the tutorial will walk you through an introduction of each new component as it's added to the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
 
@@ -26,12 +26,12 @@ For this tutorial you will need a few electronic components:
 - 1 x 4 Digit 7 Segment Anode Display (5461BS)
 - 1 x Shift Register (74HC595)
 - 1 x Tiny RTC Module (DS1307)
-- 1 x Barometer/temperature sensor (BMP180)
+- 1 x Barometer or Temperature Sensor (BMP180)
 - 3 x LEDs (different colours)
 - 5 x buttons
-- 8 x 330ohm resisters
-- 1 x Piezo Sensor
+- 1 x Piezo Speaker
 - 5 x 1Mohm resisters
+- 8 x 330ohm resisters
 - 3 x 220ohm resisters
 - Breadboard + Wires
 
@@ -481,7 +481,24 @@ Congratulations, you have now built a simple alarm clock which has the capabilit
 **Exercise 12**: Introduce a timer into your clock, such that it can start a timer for a number of minutes, and set an alarm off when the timer ends.
 
 ## Making Your Clock Smart
-TODO
+When deciding to make your electronic projects connected to the internet, you have a lot of choices for how you are going to do this. One of the most common choices is whether you should use a shield for your project to hook your current setup to the internet, or introduce another method which has internet capabilities. Realistically, both options have strengths and weaknesses, and how you connect a project to the internet is very dependent on what your project is. There are even times where you would want to use multiple solutions together.
+
+Underneath all the hype, an Arduino is just a microprocessor, designed to control simple projects which are relatively small in size. It is perfect for projects up to the size of what we have currently done. It has no network capabilities when using the standard Arduino Uno, limited processing capabilities and is limited by the fact that it can not run multiple different programs at the same time. This is where the Raspberry Pi comes into the picture.
+
+The Raspberry Pi is essentially a full computer that is sized similarly to an Arduino board. It has the capabilities of running an operating system which allows you to run mutliple program concurrently, can hook to the internet with ease and is just as cheap to purchase as an Arduino. The Raspberry Pi does have a limited amount of pins which you can connect sensors to, however it is limited to less than an Arduino. However, the Arduino can handle both digital and analogue sensors, which is contrast to the Raspberry Pi is a larger range of sensors which can only run digital sensors when using only the raspberry pi. Additionally, it is not very good at running real time systems (like clocks). However, together the Arduino and Raspberry Pi can be quite powerful.
+
+By combining the capabilities of the Arduino and Raspberry Pi, you can reap the benefits of both systems. What this means if that you can make your project more complex, and use programs concurrently while still using the simplicity of the code bases to control sensor and modules on the Arduino size. This is where our AlaMode Board fits into the picture.
+
+The AlaMode board, pictured below, is essentially an expansion board for the Raspberry Pi which is Arduino compatible.
+
+![AlaMode Board](/img/alamode.jpg)
+
+The best thing about this board though is that it has an inbuilt real time clock, which the Raspberry Pi doesn't have, and as you have seen, a normal Arduino doesn't have either. Like all electronics, the Alamode also has a datasheet which you can find [here](http://wyolum.com/docs/Alamode/AlaMode_V1datasheet.pdf).
+
+
+
+
+
 
 ## Final Remarks
 TODO
