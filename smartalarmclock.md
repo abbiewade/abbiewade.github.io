@@ -10,11 +10,13 @@ Smart Alarm clocks have a lot more functionality that a normal alarm clock would
 
 This tutorial does assume some things:
 
-- You have some basic knowledge with the Arduino framework
+- You have some basic knowledge with the Arduino framework and IDE
 - You have spent some time familiarising yourself with an Arduino board and building circuits
 - You have a basic knowledge of programming in C++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons.
 
-With these assumptions in place, the tutorial will walk you through an introduction of each new component as it's added to the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
+With these assumptions in place, the tutorial will walk you through an introduction of each new component as it's added to the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor. If you don't feel quite ready to start yet, Adafruit has a really good introduction to Arduino tutorial which you can find [here](https://learn.adafruit.com/lesson-0-getting-started/overview).
+
+__TODO summary of the steps you'll take__
 
 ## What you are Going to Need
 
@@ -502,22 +504,28 @@ To start this ball rolling, we first need to get the Raspberry Pi and AlaMode bo
 **Exercise 13:** Follow the AlaMode tutorial to set up the board, and run the Blink Example from Arduino to test that it is working.
 
 ### Checking previous old Arduino Code
+__TODO__
 
+
+#### Swapping the Real Time Clock Module
+__TODO__
 
 ### Smart alarms
+The _smart_ feature we are going to add into our clock is to modify our alarms from exercise 11 to automatically set based on the first thing entered into our calendars from today. The idea is that as a user of an alarm clock, we will never have to set an alarm before we go to bed again. Instead, our clock will look at what we have the next day, and automatically set the alarm for us. We are going to use Google Calendars for this tutorial because they are so easily accessible and have a well supported API framework already in place.
 
 #### Setting Up Google Calendars
 
+Like the AlaMode board, a good tutorial for setting up the Google Calendars API already exists [here](https://developers.google.com/google-apps/calendar/quickstart/python).
 
-
-https://developers.google.com/google-apps/calendar/quickstart/python
-
+**Exercise XX:** Follow the Google Calendar API Python tutorial to set up the APIs, and run the example from step 3 to ensure that it works correctly.
 
 #### Serial Communication
 
-#### ...
+__TODO__
 
+#### Putting it All Together
 
+__TODO__
 
 ## Final Remarks
 TODO
