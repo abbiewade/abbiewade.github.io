@@ -532,7 +532,7 @@ As has been alluded above, the AlaMode is essentially an Arduino in disguise. Wh
 **Exercise XX:** Move all your wires from your Arduino to the AlaMode board and run your code. Ensure that you have left pin 0 and 1 free for future use, and that your pins match to the allocated pins above.
 
 #### Swapping the Real Time Clock Module
-__TODO__
+__TODO get code off raspberry pi and write this section up__
 
 ### Smart alarms
 The _smart_ feature we are going to add into our clock is to modify our alarms from exercise 11 to automatically set based on the first thing entered into our calendars from today. The idea is that as a user of an alarm clock, we will never have to set an alarm before we go to bed again. Instead, our clock will look at what we have the next day, and automatically set the alarm for us. We are going to use Google Calendars for this tutorial because they are so easily accessible and have a well supported API framework already in place.
@@ -607,20 +607,21 @@ With all this code in place, our Arduino side of the program is ready to go. All
 
 #### Getting and Sending the Alarm Details in python
 
-__TODO__
+__TODO get code off raspberry pi and write this section up__
 
 #### Putting it All Together
 
-__TODO__
+__TODO running the entire thing together__
 
 ## Final Remarks
-TODO
+Congratulations on building your first smart alarm clock. You now have a device that will wake you up based on your alarm clock. Throughout this tutorial you have learned the basics of using segmented displays, shift registers, real time clock modules,
 
-Where to go from here
-    - music alarm using the raspberry pi
-    - control the clock with a mobile app
-    - adapt your wake up time based off traffic
-    - different alarms based on the morning you are waking up
-    - automatic brightness display
-    - can play music through it
-    - changing the display
+But you shouldn't stop here. There are still millions of directions you could take your smart clock. So here are some ideas to get you started. Keep in mind that not all of these future challenges are easy, and some will require more learning of new and different sensors. However, that shouldn't stop the fun.
+
+- Changing the segment display to a screen that you can write to. See if you can write the temperature on the same screen. Make the screen change brightness automatically based on either time or other sensors.
+- Instead of using the Piezo speaker to simulate the alarm sound, try and send a message back to the python program to play music through a raspberry pi speaker.
+- Write an app to control your smart alarm clock from your phone. Maybe try and get the smart alarm clock to be able to play music from your phone!
+- Modify the alarm time to incorporate the local traffic for your first calendar event. See if in bad traffic it will wake you up earlier, or if public transport timetables change that it can modify the time to still get you where you want to be on time.
+- Get your clock to have different alarms based on the morning you are waking up. If you are going to work, having a day off or even sleeping in, maybe one of those days you would prefer the radio, or temperatures being read out loud instead of music.
+
+Happy Tinkering!
