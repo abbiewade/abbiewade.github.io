@@ -24,7 +24,7 @@ Initially we are going to start by building a clock from scratch hooked up to an
 
 Once we have gone through the steps of building an Arduino clock, we will port the work we did on the Arduino to a AlaMode board and Raspberry Pi. Here we are going to hook google calendars into the project to see how we can use the internet to make our device smarter.
 
-This tutorial will end by giving some ideas where to take the project at the conclusion of this tutorial. 
+This tutorial will end by giving some ideas where to take the project at the conclusion of this tutorial.
 
 ## What you are Going to Need
 
@@ -657,7 +657,7 @@ def main():
     while True:
         nowutc = datetime.datetime.utcnow()
         now = utc_to_local(nowutc)
-        nowstr = nowutc.isoformat() + 'Z' # 'Z' indicates UTC time
+        nowstr = nowutc.isoformat() + 'Z' 
 
         eventsResult = service.events().list(
             calendarId='primary', timeMin=nowstr, maxResults=3, singleEvents=True,
@@ -679,7 +679,7 @@ def main():
         if now.time().hour == midnight.time().hour and now.time().minute == midnight.time().minute:
             haveAlarmToday = False
 
-        time.sleep(60); #check every minute
+        time.sleep(60);
 ```
 
 Just like every python script, this needs to be started in terminal using ```python 2.7```. Once you have your code compiling, you are ready to move on to join the entire project up together.
