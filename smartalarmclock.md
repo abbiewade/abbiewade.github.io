@@ -572,7 +572,8 @@ if(alarmIsSet){
 }
 ```
 
-For now, we will assume that the python side of our program will deal with sending a correctly formatted time, so
+You will notice that we have used two helper functions in the code above. We are also going to step through what the basic versions of this code should look like. In the ```setAlarm(int time)``` function, we want to store the time and show to the user that there is an alarm set. For now, we will assume that the python side of our program will deal with sending a correctly formatted time, so all we have to do is store the value we read from serial and store it for later use. The code, while simple is quite important, and shown below.
+
 ```c++
 void setAlarm(int time){
     alarmTime = time;
@@ -580,12 +581,14 @@ void setAlarm(int time){
 }
 ```
 
+The ```checkAlarm()``` function is not as simple as the one to set the alarm, but still achievable. To check the alarm, we first have to get the current time and then store it in a similar fashion to what the alarm value was passed to us like. In other words, we have to multiply the hour value by 100 and add the minutes to get a 4 digit positive integer that represents the time. Once we have this number, we need to check if the alarm time is the same as the current time. If it isn't we do nothing and continue on with the program. If it is, we need to play the alarm sound through the piezo speaker and wait for the user to press a button before resetting the alarm state back to off. The code for this function is featured below.
+
 ```c++
 void checkAlarm(){
     // get the current time
     getTime();
     int goOffAt = 100*hour + minute;
-    if(goOffAt >= alarmTime){
+    if(goOffAt == alarmTime){
         // make an alarm sound
         digitalWrite(piezo, HIGH);
 
@@ -599,6 +602,12 @@ void checkAlarm(){
     }
 }
 ```
+
+With all this code in place, our Arduino side of the program is ready to go. All we have to do now is write the python code to get our serial data. In the mean time, you will notice that by running the program, nothing has changed. The time and temperature are still being displayed.
+
+#### Getting and Sending the Alarm Details in python
+
+__TODO__
 
 #### Putting it All Together
 
