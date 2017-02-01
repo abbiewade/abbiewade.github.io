@@ -2,25 +2,31 @@
 
 __TODO fix fritzing diagrams to have the correct pins__
 
-If you are anything like me you hate waking up in the mornings and your alarm clock is your worst nightmare. The dreaded _"beep. beep. beep."_ in the morning is enough to drive anyone insane. But how does it all work? Is there a way we can make it smarter to maximise the amount of sleep you can get every morning?
+If you are anything like me you hate waking up in the mornings and your alarm clock is your worst nightmare. The dreaded _"beep! beep! beep!"_ in the morning is enough to drive anyone insane. But how does it all work? Is there a way we can make it smarter to maximise the amount of sleep you can get every morning?
 
-This tutorial aims to answer all your questions about how an alarm clock works and what you can do to maximise your sleeping time. So, in this tutorial we are going to build a smart alarm clock from the ground up! What this means is we are going to start with simple electronic components and first build a _dumb_ alarm clock. Once we complete this challenge, we are then going to take what we originally built and connect it to the internet to make it _smart_.
+This tutorial aims to answer all your questions about how a smart alarm clock works and what you can do to maximise your sleeping time. To accomplish this, in this tutorial we are going to build a smart alarm clock from the ground up! We are going to start with simple electronic components and first build a _dumb_ alarm clock. Once we complete this challenge, we are then going to take what we originally built and connect it to the internet to make it _smart_.
 
-Smart Alarm clocks have many capabilities that a normal alarm clock doesn't. For example, what if you never had to set an alarm again. Instead, your clock automatically looked at your calendar and chose the best possible time to wake you up? What if your clock could account for road closures and traffic and still get you up in time for work? All these are possible as you will see in the tutorial to come.
+Smart Alarm clocks have a lot more functionality that a normal alarm clock would never be able to match. For example, what if you never had to set an alarm again?  Instead, your clock automatically looked at your calendar and chose the best possible time to wake you up! What if your clock could account for road closures and traffic and still get you up in time for work? All these are possible as you will see in the tutorial to come. ___ARE YOU COVERING ROAD CLOSURES AND TRAFFIC?!___
 
-This tutorial does assume that you have some basic knowledge in the Arduino framework. As such, there is an assumption that you have spent some time familiarising yourself with an Arduino board and building circuits. Additionally, there is an assumption that you have a basic knowledge of programming in c++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. With these assumptions in place, the tutorial will walk you through an introduction of each new component introduced into the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
+This tutorial does assume some things:
+
+- You have some basic knowledge with the Arduino framework
+- You have spent some time familiarising yourself with an Arduino board and building circuits
+- You have a basic knowledge of programming in C++, understand the basic Arduino program structure, and can comfortably program both LEDs and buttons. 
+
+With these assumptions in place, the tutorial will walk you through an introduction of each new component as it's added to the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor.
 
 ## What you are Going to Need
 
-For this tutorial you will need a fair few electronic components. Here is a list of all the components you will need to complete the entire tutorial:
+For this tutorial you will need a few electronic components:
 
 - 1 x Arduino Uno Board
-- 1 x Raspberry Pi 3
+- 1 x Raspberry Pi (version 2 or 3)
 - 1 x [AlaMode Board](http://wyolum.com/projects/alamode/)
 - 1 x 4 Digit 7 Segment Anode Display (5461BS)
 - 1 x Shift Register (74HC595)
 - 1 x Tiny RTC Module (DS1307)
-- 1 x Barometer sensor (BMP180)
+- 1 x Barometer/temperature sensor (BMP180)
 - 3 x LEDs (different colours)
 - 5 x buttons
 - 8 x 330ohm resisters
@@ -31,7 +37,7 @@ For this tutorial you will need a fair few electronic components. Here is a list
 
 ## Just Your Basic Clock
 
-To get started, we are going to build a alarm clock that is not connected to the internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the Internet further down.
+To get started, we are going to build a alarm clock that is not connected to the Internet. The code developed in this section will act as part of the framework for building an alarm clock connected to the Internet later on.
 
 ### Displaying Digits
 The first challenge is displaying numbers using a 7 segment, 4 digit display. A 7 segment display is built up of 7 LEDs arranged as shown in the image below. Each of the LEDs is considered a segment, which can be used in conjunction to draw numeric values on the display.
@@ -40,15 +46,15 @@ While we call this a 7 segment display, technically there are 8 LED segments tha
 
 ![4-digit_7-segment_display image](/img/DI-0017_2.jpg)
 
-7 Segment displays come in two varieties - common _anode_ and common _cathode_. Both display types contain the word '_common_' in front of them. This simply refers to the fact that for all the LED segments on a digit are linked by at one end. The common _anode_ variant links the LEDs at the ```VCC/VDD``` (+V) line rather than at ```VEE/VSS/GND``` (0V), which means that if you wish to turn an LED on, you need to power all of the LEDs, and only ground the segments you want to light up.
+7 Segment displays come in two varieties - common _anode_ and common _cathode_. Both display types contain the word '_common_' in front of them. This simply refers to the fact that for all the LED segments on each digit are linked together at one end. The common _anode_ variant links the LEDs at the ```VCC/VDD``` (+V) line rather than at ```VEE/VSS/GND``` (0V), which means that if you wish to represent a digit, you need to power all of the LED segments, and only ground the ones you want to light up.
 
-The cathode is the opposite to the anode, where the common LED connection is at the GND line, and a ```HIGH``` value is used to turn on each individual segment. Ultimately, there is no difference in functionality of the two kinds, you just need to invert the logic for your program if the LED segments do the opposite of what you expect! For the remainder of this project we are going to assume when talking about any 7 segment display that it is of the common _anode_ variety.
+The cathode is the opposite to the anode, where the common connection is at the GND line, and a ```HIGH``` value is used to turn on each individual segment. Ultimately, there is no difference in functionality of the two kinds, you just need to invert the logic for your program if the LED segments do the opposite of what you expect! For the remainder of this project we are going to assume when talking about any 7 segment display that it is of the common _anode_ variety.
 
-A 7 segment display works by assigning different lettering to each segment, as shown in the image below. What this means is that if you set the pin attached to ```A``` to ```LOW``` then it will turn on.
+A 7 segment display works by assigning different lettering to each segment, as shown in the image below. What this means is that if you power the digit and set the pin attached to ```A``` to ```LOW``` then it will turn on.
 
 ![7-segment_display lettering image](/img/7-segment display.png)
 
-Different combinations of different segments lighting up make different shapes. The table below shows the segments required for drawing a zero on the display. Have a go filling out the rest of the table for the other 9 digits.
+Different combinations of different segments lighting up make different shapes. The table below shows the segments required for drawing a zero on the display (note the inverted logic!). Have a go filling out the rest of the table for the other 9 digits.
 
 | Digit | A | B | C | D | E | F | G | H |
 | ----- |:---:|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
@@ -65,13 +71,13 @@ Different combinations of different segments lighting up make different shapes. 
 
 #### Build the circuit!
 
-Now that you have a basic understanding of how a 7-segment display works, we are going to have a go building a simple circuit containing one, and program it to display the number zero on all four digits. To start off we are going to build the circuit as displayed in the image below. Once you finish building the circuit it is then time to move on to the programming.
+Now that you have a basic understanding of how a 7-segment display works, we are going to have a go building a simple circuit containing one, and program it to display the number zero on all four digits. Build the circuit as displayed in the image below. Once you finish building the circuit, move on to the programming!
 
 ![4-digit_7-segment_display circuit image](/img/7segment4digitDisplay_bb.png)
 
 #### Time to for control
 
-First off we need to define our pin values in the code. The large advantage of doing so is to allow us to reuse our code later on. If we decide later to use a different set of pins to control this display, all we have to do is change one value rather than lots of meaningless integers throughout our code!
+First off we need to define which pins are connected to each part of the display. The major advantage of doing so is to allow us to reuse code later on. If we decide later to use a different set of pins to control this display, all we have to do is change one value rather than lots of meaningless integers throughout our code!
 
 ```c++
 #define A 11
@@ -88,7 +94,7 @@ First off we need to define our pin values in the code. The large advantage of d
 #define thirdDigit 8
 #define fourthDigit 6
 ```
-Now that we have defined all our pins, we need to set them up so the Arduino knows that they are all output pins:
+Now that we have defined all our pins, we need to set them up so the Arduino configures them as output pins:
 
 ```c++
 void setup() {
@@ -108,7 +114,7 @@ void setup() {
 }
 ```
 
-To get this display working, we are first going to start by showing four 0's on screen. To do this, we need to put the following code in the main control loop. The code below turns on the pins for all four digits, and then grounds the LED segments for the shape 'zero'.
+For now, we are going to show four 0's on screen. To do this, we need to put the following code in the main control loop. The code below turns on the pins for all four digits, and then grounds the LED segments for the shape 'zero'.
 
 ```c++
     // Turns the pins that you want to display a number on
@@ -130,7 +136,7 @@ To get this display working, we are first going to start by showing four 0's on 
 
 Once you have finished typing up your program, download it to the Arduino and see what happens. Provided that everything goes smoothly, you should see all four digits displaying the number zero!
 
-**Exercise 1**: Write 9 helper functions which display a particular number. In other words, you should have 9 functions structured similarly to the code below. _Hint: Remember that these functions are to draw the number, not to control which digit you are drawing them at._
+**Exercise 1**: Write 9 helper functions which display a particular number. In other words, you should have 9 functions structured similarly to the code below. _Hint: Remember that these functions are to draw the number, not to control which digit you are drawing them at! Keep it simple._
 
 ```c++
 void displayZero(){
@@ -162,7 +168,7 @@ For this part of the tutorial we are going to introduce the shift register into 
 
 #### Time to for control
 
-As you can see from your now complete circuit, we have moved the connections from A-G and DP from the Arduino and wired them directly into the shift register. As such, the program needs to reflect this. Add the following to your #defines, making sure to remove the letters A-G and DP from the previous program:
+As you can see from your new circuit, we have moved the connections from A-G and DP from the Arduino and wired them directly into the shift register. As such, the program needs to reflect this. Add the following to your ```#define```s, making sure to remove the letters A-G and DP from the previous program:
 
 ```c++
 #define firstDigit  2
@@ -173,7 +179,7 @@ As you can see from your now complete circuit, we have moved the connections fro
 #define latchPin 7
 #define clockPin 8
 ```
-Similar to above, we also need to modify the setup function, making sure to remove the letters A-G and DP from the previous program.
+Similar to above, modify the setup function, making sure to remove the letters A-G and DP from the previous program.
 
 ```c++
 pinMode(dataPin, OUTPUT);
@@ -181,7 +187,7 @@ pinMode(latchPin, OUTPUT);
 pinMode(clockPin, OUTPUT);
 ```
 
-To output data to the shift register, there is a simple one-line command that we need to learn - ```shiftOut(dataPin, clockPin, MSBFIRST, output_value)```. What this does is clock out the output values to the shift register, which in turn enables or disables its outputs accordingly. The ```output_value``` is an 8-bit binary value, which maps to the different segments. For example, the ```output_value``` for drawing zero would look like ```0b00000011```, which represents in a binary format the combination drawn in the table earlier in the tutorial (notice the inverted logic to what you'd expect!). By adding the binary value for each number as a constant at the top of your program, you can modify the helper function to look like the following:
+To output data to the shift register, there is a simple one-line command that we need to learn - ```shiftOut(dataPin, clockPin, MSBFIRST, output_value)```. What this does is clock out the output values to the shift register, which in turn enables or disables its outputs accordingly. The ```output_value``` is an 8-bit binary value, which maps to the different segments. For example, the ```output_value``` for drawing zero would look like ```0b00000011```, which represents in a binary format the combination drawn in the table earlier in the tutorial (again, notice the inverted logic to what you'd expect!). By adding the binary value for each number as a constant at the top of your program, you can modify the helper function to look like the following:
 
 ```c++
     const int zero  = 0b00000011;
@@ -278,7 +284,7 @@ for(int i = 0; i < 10000; i++){
 }
 ```
 
-For those who did, you may notice that your display isn't showing the number correctly. Your display will be flickering briefly and then turning off!. Not to worry - the problem here is the structure of the main loop. In the code below, we have written a code sample that is identical to the one above, however in not using the delay and using ```millis()```, we remove the flickering since the numbers are being constantly refreshed!.
+For those who did, you may notice that your display isn't showing the number correctly. Your display will be flickering briefly and then turning off!. Not to worry - the problem here is the structure of the main loop. In the code below, we have written a code sample that is identical to the one above, however in not using the delay and using ```millis()```, we remove the flickering since the numbers are being constantly refreshed with power at the correct segments!
 
 
 ```c++
@@ -320,7 +326,7 @@ This clock module has two different functionalities we are going to use, setting
 byte second, minute, hour, dayOfWeek, dayOfMonth, month, year;
 ```
 
-Additionally, when using the Wire library, we need to make sure we start it in the setup control loop by writing ```Wire.begin();```.
+Additionally, when using the Wire library, we need to make sure we start it in the setup code  by writing ```Wire.begin();```.
 
 You may have gathered that the data from the real time clock is a stored in a byte from the code above. However, when we need to use the data from the clock, we need to be able to use a number in the base 10 number system (decimal). To do this we are going to do two helper functions that convert between decimal numbers and binary coded decimals (bytes).
 
@@ -346,7 +352,7 @@ void setClock(int second, int minute, int hour, int dayOfWeek, int dayOfMonth, i
 }
 ```
 
-If you look closely at your Tiny RTC module, you can see that it has a battery on board. This battery allows the module to remember the time you set for when you power your device again. Provided that the battery is in the sensor when you set the time, you won't need to set it again until the battery runs flat. However, there will be times to use this function you wrote, so where would you use it? The answer to this question is in your setup control loop. To set the time, type the current time into the input parameters for this function when you call it and you are good to go.
+If you look closely at your Tiny RTC module, you can see that it has a battery on board. This battery allows the module to remember the time you set for when you power your device again. Provided that the battery is in the sensor when you set the time, you won't need to set it again until the battery runs flat. However, there will be times to use this function you wrote, so where would you use it? The answer to this question is in your initial setup code. To set the time, type the current time into the input parameters for this function when you call it and you are good to go.
 
 Getting the time from the real time clock is similar to the way you set the clock. Rather than writing all the data to the clock through wire, we write a single byte with value 0 to the clock and then request the information by reading the wire. The function to read the time looks like below.
 
@@ -366,7 +372,7 @@ void getTime(){
 }
 ```
 
-Up to now, we haven't printed anything to the serial port, but that is about to change. Because we are working on a simple circuit without any display, we are just going to print it to the [Serial](https://www.arduino.cc/en/reference/serial). You may recall using serial from your first ```Hello World``` program on Arduino, but if you don't remember, you need to start your serial connection in your setup control loop by typing ```Serial.begin(19200);```. Once you have the serial running, we are going to write a function to print the time and date to serial, which looks like the one featured below.
+Up to now, we haven't printed anything to the serial port, but that is about to change. Because we are working on a simple circuit without any display, we are just going to print it to the [Serial](https://www.arduino.cc/en/reference/serial). You may recall using serial from your first ```Hello World``` program on Arduino, but if you don't remember, you need to start your serial connection in your setup code by typing ```Serial.begin(19200);```. Once you have the serial running, we are going to write a function to print the time and date to serial, which looks like the one featured below.
 
 ```c++
 void printTime(){
@@ -385,7 +391,7 @@ void printTime(){
 }
 ```
 
-Once you have everything together, compile and download the program to your Arduino. With any luck your program should be printing the time and date to serial. If it is, congratulations! You are now ready to add the segment display back into the circuit to display the time on this. If not, check your serial is on the right speed, and that you are reading and that you have wired your board in correctly.
+Once you have everything together, compile and download the program to your Arduino. With any luck your program should be printing the time and date via the serial console. If it is, congratulations! You are now ready to add the segment display back into the circuit to display the time on this. If not, check your serial console connection on the computer is set to the right speed, and that you have wired your board up correctly.
 
 ### Building A Simple Clock
 
@@ -403,11 +409,11 @@ void displayTime(){
 
 ### Measuring Temperature
 
-Now that we have a simple clock working, we are going to add an extra sensor in - a pressure sensor. A pressure sensor is essentially a barometer which measures temperature, altitude and batrometric pressure. If you wanted to, you could use a standard sensor that only measures temperature, however this sensor is quite nice in that it has a highly accurate digital temperature reading and it is very easy to use. The pressure sensor looks similar to below and the data sheet can be found [here](https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf)
+Now that we have a simple clock working, we are going to add an extra sensor in - a barometric sensor. A barometric sensor is essentially an air pressure sensor which also measures temperature and estimated altitude. If you wanted to, you could use a standard sensor that only measures temperature, however this particular sensor is quite nice in that it has a highly accurate digital temperature reading and it is easy to use. The pressure sensor looks similar to below and the data sheet can be found [here](https://cdn-shop.adafruit.com/datasheets/BST-BMP180-DS000-09.pdf)
 
 ![Pressure sensor](/img/bmp180.jpeg)
 
-There are two ways we can choose to program this particular sensor, from scratch using the I2C data, or using the [Adafruit Sensor Library](https://github.com/adafruit/Adafruit_Sensor). This seems like a perfect time in the tutorial to introduce using external Arduino libraries. Installing external libraries is a very simple process which involves downloading the packaged code from the source, and placing it in a correct folder. If you have never installed a library before, the Arduino Guide has an excellent explanation of how you can install different libraries which you can find [here](https://www.arduino.cc/en/Guide/Libraries).
+There are two ways we can choose to program this particular sensor: coding it from scratch using the I2C data, or using the [Adafruit Sensor Library](https://github.com/adafruit/Adafruit_Sensor) to avoid reinventing the wheel. This seems like a perfect time in the tutorial to introduce using external Arduino libraries. Installing external libraries is a very simple process which involves downloading the packaged code from the source, and placing it in a correct folder. If you have never installed a library before, the Arduino Guide has an excellent explanation of how you can install different libraries which you can find [here](https://www.arduino.cc/en/Guide/Libraries).
 
 **Exercise 6**: Using the links in the paragraph above, install the Adafuit Sensor Library. Once you have finished, restart your Arduino IDE.
 
@@ -417,7 +423,7 @@ Now that you have all the correct libraries installed, it is time to build this 
 
 ![](/img/temperatureClock_bb.png)
 
-#### Time to for Control
+#### Time for more Control
 
 To include the libraries in what we have done so far, we need to add the following include lines to the base code.
 
@@ -426,14 +432,14 @@ To include the libraries in what we have done so far, we need to add the followi
 #include <Adafruit_BMP085_U.h>
 ```
 
-Using this library means we can treat the sensor values similar to an object. As a consequence though, we need to add the following global declarations into our base code. These allow us to store and access the sensor data later in the program.
+Using this library means we can treat the sensor as an encapsulated container of constantly updated values. As a consequence though, we need to add the following global declarations into our base code. These allow us to store and access the sensor data later in the program.
 
 ```c++
 Adafruit_BMP085_Unified bmp = Adafruit_BMP085_Unified(10085); //barometer sensor
 float temperature;
 ```
 
-As the underlying code in the Adafruit library uses the ```Wire.h``` library, similarly we need to start the transmission using the```bmp.begin();``` command. This command needs to go in your setup control loop.
+As the underlying code in the Adafruit library uses the ```Wire.h``` library, similarly we need to start the transmission using the```bmp.begin();``` command. This command needs to go in your setup code.
 
 Like learning the clock, we are first going to print out the temperature to the serial. Actually accessing the sensor values that are measured is super easy. To access the temperature, we use the object and store the value in the temperature variable we declared earlier. We then print it to the serial, as shown in the function below.
 
@@ -464,7 +470,7 @@ This code does three things. The first task gets the temperature values and stor
 **Exercise 9**: Modify your code such that if the button is pressed, the display will show the temperature and turn on the LED. If the button is not pressed, it will display the time and turn off the LED.
 
 ### Extra Functionalities
-Congratulations, you have now built a simple alarm clock which has the capability of measuring temperature! By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Additionally, you may want to consider using a piezo sensor to simulate the alarm sound, which can be wired into your circuit similar to the image below. Piezo sensors are programmed identically to LEDs, where ```HIGH``` will make the sensor emit a noise, and ```LOW``` will turn the sound off.
+Congratulations, you have now built a simple alarm clock which has the capability of measuring temperature! By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Additionally, you may want to consider using a piezo speaker to emit the alarm sound, which can be wired into your circuit as shown in the image below. Piezo speakers are programmed identically to LEDs, where ```HIGH``` will make the speaker turn on and emit a noise, and ```LOW``` will turn the speaker off.
 
 ![](/img/piezoCircuit_bb.png)
 
