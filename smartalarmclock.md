@@ -16,7 +16,11 @@ This tutorial does assume some things:
 
 With these assumptions in place, the tutorial will walk you through an introduction of each new component as it's added to the circuit, basic examples of how to use it and exercises to complete yourself using your new sensor. If you don't feel quite ready to start yet, Adafruit has a really good introduction to Arduino tutorial which you can find [here](https://learn.adafruit.com/lesson-0-getting-started/overview).
 
-__TODO summary of the steps you'll take__
+## Tutorial Structure
+
+This tutorial is designed to walk you through everything you need to know to build a simple smart clock.
+
+__TODO finish__ 
 
 ## What you are Going to Need
 
