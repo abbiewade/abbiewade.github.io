@@ -174,7 +174,7 @@ The choice of which is better is up to you, but in terms of size and cost for th
 
 Shift registers are chips which allow for additional inputs into the circuit. Shift registers have two different functionalities. The first of these is to use serial communication to collect information from sensors. The second functionality is to use parallel communication to allow for multi-pin output control. It is the multi-pin output control function that we are going to use to drive the display
 
-__TODO how does it do this. explain shift registers better. Explain data, latch, clock__
+The way a shift register works is every clock cycle on the chip, it expects to recieve 8 pulses of data. Each pulse of data will be either ```HIGH``` or ```LOW``` and correspond to whether there should be power going through that part of the register or not. When all of the 8 bits of data have been transferred via the clock and data lines, the latch pin copies the data to stop noise when the next 8 bits are transmitted to the shift register.
 
 #### Build the circuit!
 
