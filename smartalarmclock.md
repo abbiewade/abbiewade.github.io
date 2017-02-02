@@ -174,7 +174,7 @@ The choice of which is better is up to you, but in terms of size and cost for th
 
 Shift registers are chips which allow for additional inputs into the circuit. Shift registers have two different functionalities. The first of these is to use serial communication to collect information from sensors. The second functionality is to use parallel communication to allow for multi-pin output control. It is the multi-pin output control function that we are going to use to drive the display
 
-The way a shift register works is every clock cycle on the chip, it expects to recieve 8 pulses of data. Each pulse of data will be either ```HIGH``` or ```LOW``` and correspond to whether there should be power going through that part of the register or not. When all of the 8 bits of data have been transferred via the clock and data lines, the latch pin copies the data to stop noise when the next 8 bits are transmitted to the shift register.
+The way a shift register works is every clock cycle on the chip, it expects to receive 8 pulses of data. Each pulse of data will be either ```HIGH``` or ```LOW``` and correspond to whether there should be power going through that part of the register or not. When all of the 8 bits of data have been transferred via the clock and data lines, the latch pin copies the data to stop noise when the next 8 bits are transmitted to the shift register.
 
 #### Build the circuit!
 
@@ -474,7 +474,7 @@ void serialTemperature(){
 }
 ```
 
-To make our lives easier because we don't always want to just display the temperature to the Serial, we are going to write a function called ```displayTemperature``` which gets the temperature and displays it to screen for us. The code should look like below.
+To make our lives easier because we don't always want to just display the temperature to the Serial, we are going to write a function called ```displayTemperature``` which gets the temperature and displays it to screen for us. The code should look like the following.
 
 ```c++
 void displayTemperature(){
@@ -493,7 +493,7 @@ This code does three things. The first task gets the temperature values and stor
 **Exercise 9**: Modify your code such that if the button is pressed, the display will show the temperature and turn on the LED. If the button is not pressed, it will display the time and turn off the LED.
 
 ### Extra Functionalities
-Congratulations, you have now built a simple alarm clock which has the capability of measuring temperature! By increasing your circuit to contain more LEDs or buttons, you can now complete the following exercises. Additionally, you may want to consider using a piezo speaker to emit the alarm sound, which can be wired into your circuit as shown in the image below. Piezo speakers are programmed identically to LEDs, where ```HIGH``` will make the speaker turn on and emit a noise, and ```LOW``` will turn the speaker off.
+Congratulations, you have now built a simple alarm clock which has the capability of measuring temperature! By enhancing your circuit to contain additional LEDs or buttons, you can now complete the following exercises. Additionally, you may want to consider using a piezo speaker to emit the alarm sound, which can be wired into your circuit as shown in the circuit layout below. Piezo speakers are programmed identically to LEDs, where ```HIGH``` will make the speaker turn on and emit a noise, and ```LOW``` will turn the speaker off.
 
 ![](/img/piezoCircuit_bb.png)
 
@@ -505,19 +505,21 @@ Congratulations, you have now built a simple alarm clock which has the capabilit
 
 ## Making Your Clock Smart
 
-Now is the time to cover why we should bother connecting devices to the Internet. The answer to this is very simple: by connecting our project to the Internet, we have the ability to communicate, interact and collaborate with the world wide web to enable far more functionality! We get the ability to store collected data in data centres to use later. We can combine current sensor data with Internet-based data to get more accurate information about what we are sensing. In short, by utilising the Internet, we can grow our project to interact further with the world.
+Now is the time to cover why we should bother connecting devices to the Internet. The answer to this is very simple: by connecting our project to the Internet, we have the ability to communicate, interact and collaborate with other devices, applications, protocols and services on the internet to enable far more functionality! We get the ability to store collected data in data centres to use later. We can combine current sensor data with Internet-based data to get more accurate information about what we are sensing. In short, by utilising the Internet, we can grow our project to interact further with the world.
 
-Unfortunately, the Arduino is a very simple microprocessor, designed to control simple projects which are relatively small in size. It is perfect for projects up to the size of what we have currently done, but it has no network capabilities of its own when using the standard Arduino Uno, and its limited processing capabilities and speed make it less easy to connect to the web securely.This is where more powerful boards like the Raspberry Pi comes into the picture.
+Unfortunately, the Arduino is a very simple microprocessor, designed to control simple projects which are relatively small in size. It is perfect for projects up to the size of what we have currently done, but it has no network capabilities of its own when using the standard Arduino Uno, and its limited processing capabilities and speed make it less easy to connect to the web securely. This is where more powerful boards like the Raspberry Pi, BeagleBone and Edison comes into the picture.
 
-The Raspberry Pi is essentially a fully functional computer that is sized similarly to an Arduino board. It has the capabilities of running an operating system which allows you to run mutliple program concurrently, can hook to the Internet with ease and is just as cheap to purchase as an Arduino. The Raspberry Pi does have a limited amount of pins which you can connect sensors to, however it isn't as predictable at turning them on and off reliably. Additionally, it is not very good at running real time systems (like clocks). The Arduino can also handle both digital and analog sensors, in contrast to the Raspberry Pi which can only run digital sensors.  However, together the Arduino and Raspberry Pi can be quite a powerful team.
+For simplicities sake, we will be using the Raspberry Pi for the means of connecting what we have done so far in this tutorial to the internet. The Raspberry Pi is essentially a fully functional computer that is sized similarly to an Arduino board. It has the capabilities of running an operating system which allows you to run multiple program concurrently, can hook to the Internet with ease and is just as cheap to purchase as an Arduino. The Raspberry Pi does have a limited amount of pins which you can connect sensors to, however it isn't as predictable at turning them on and off reliably. Additionally, it is not very good at running real time systems (like clocks). While the Arduino can also handle both digital and analog sensors, in contrast the Raspberry Pi can only run digital sensors.  However, together an Arduino and Raspberry Pi can be quite a powerful team.
 
 By combining the capabilities of the Arduino and Raspberry Pi, you can reap the benefits of both systems. You can make your project more complex, and use programs concurrently while still using the simplicity of the Arduino code to control sensors and other modules.
 
-The AlaMode board, pictured below, is essentially an expansion board for the Raspberry Pi which is Arduino compatible.  This is what we'll be using to connect to the Pi in this tutorial, although you could just as easily connect a regular Arduino over USB and use the Pi as a normal computer.
+The AlaMode board, pictured below, is essentially an expansion board for the Raspberry Pi which is Arduino Uno compatible.  This is what we'll be using to connect to the Pi in this tutorial, although you could just as easily connect a regular Arduino over USB and use the Pi as a normal computer.
 
 ![AlaMode Board](/img/alamode.jpg)
 
-The best thing about this board though is that it has an inbuilt real time clock, which the Raspberry Pi doesn't have, and as you have seen, a normal Arduino doesn't have either. Like all electronics, the Alamode also has a datasheet which you can find [here](http://wyolum.com/docs/Alamode/AlaMode_V1datasheet.pdf).
+The best thing about this board is that it has an inbuilt real time clock, which the Raspberry Pi and Arduino don't. Like all electronics, the Alamode also has a datasheet which you can find [here](http://wyolum.com/docs/Alamode/AlaMode_V1datasheet.pdf).
+
+__TODO we will be using the following RP capabilities__
 
 ### Converting our Simple Clock to the Raspberry Pi
 
@@ -527,8 +529,10 @@ To start this ball rolling, we first need to get the Raspberry Pi and AlaMode bo
 
 ### Connecting our Simple Clock to the Raspberry Pi
 
+__TODO__
+
 ### Checking previous old Arduino Code
-As has been alluded above, the AlaMode is essentially an Arduino in different clothing. What this means is that your code from the first part of this tutorial should run perfectly if you move the pins over from your Arduino to the corresponding pins on the AlaMode board. We are going to use this as a perfect opportunity to check that your wiring is the same as the remainder of the tutorials. Please keep in mind that the RTC module and the pressure sensor are not displayed in the pin define section as they are both hooked into the SDA/SCL pins which run the I2C busses. The defined pins that will be used for the remainder of the tutorial are as follows.
+As mentioned above, the AlaMode is essentially an Arduino in different clothing. What this means is that your code from the first part of this tutorial will run without a hitch if you move the pins over from your Arduino to the corresponding pins on the AlaMode board. We are going to use this as a perfect opportunity to check that your wiring is the same as the remainder of the tutorials. Please keep in mind that the RTC module and the pressure sensor are not displayed in the pin define section as they are both hooked into the SDA/SCL pins which run the I2C busses. The defined pins that will be used for the remainder of the tutorial are as follows.
 
 ```c++
 #define firstDigit  2
@@ -553,7 +557,7 @@ As has been alluded above, the AlaMode is essentially an Arduino in different cl
 #define piezo      A3
 ```
 
-**Exercise 14:** Move all your wires from your Arduino to the AlaMode board and run your code. Ensure that you have left pin 0 and 1 free for future use, and that your pins match to the allocated pins above.
+**Exercise 14:** Move all the wires from your Arduino pins to the pins on the AlaMode board and run your code. Ensure that you have left pin 0 and 1 free for future use, and that your pins match to the allocated pins above.
 
 ### Smart alarms
 The _smart_ feature we are going to add into our clock is to modify our alarms from exercise 11 to automatically enable based on the first event entered into our calendars from today. The idea is that as a user of an alarm clock, we will never have to set an alarm before we go to bed again. Instead, our clock will look at what we have the next day, and automatically set the alarm for us. We are going to use Google Calendar for this tutorial because it is easily accessible and has a well supported API already in place.
@@ -567,7 +571,7 @@ A good tutorial for setting up the Google Calendars API already already exists [
 #### Serial Communication
 Up to now, you have more than likely used the Serial communication to print things out in the serial monitor, such as the time or temperature earlier. This functionality of printing out data is just scraping the bottom of the barrel for what the Serial library can do. Serial is a protocol which allows us to pass information between different parts of a project. The [Serial](https://www.arduino.cc/en/reference/serial) library allows for communication between multiple Arduinos, an Arduino and other programs, or even the user and the Arduino.
 
-In our project of building a smart alarm clock, the Arduino is going to be receiving data. To begin with, we are going to go on a tangent and build the following small program to experiment with. All this program does is wait for some information to be passed to the serial, and then echoes it back onto the serial communication.
+In our project of building a smart alarm clock, the Arduino is going to be receiving data. To begin with, we are going to build the following small program to experiment with the serial interface of the Arduino. All this program does is wait for some information to be passed to the serial, and then echoes it back onto the serial communication.
 
 ```c++
 byte text;
@@ -584,7 +588,9 @@ void loop() {
 }
 ```
 
-Once you have uploaded this sketch onto your Arduino, open up the serial communication window and type a message to the Arduino. Once you press send, you should see the same message reflected back in the window. In this example, the Arduino is reading data that we manually type to it. But as said earlier, the Arduino is not just limited to this type of communication. In the upcoming sections, we are going to use a similar idea on the Arduino code. Thus, for the purpose of integrating Google Calendars with Python to our Arduino code, we are going to exclusively look at using Serial to integrate with a python program.
+Once you have uploaded this sketch onto your Arduino, open up the serial communication window and type a message to the Arduino. Once you press send, you should see the same message reflected back in the window. In this example, the Arduino is reading data that we manually type to it. But as said earlier, the Arduino is not limited to just this type of communication.
+
+__TODO -- In the upcoming sections, we are going to use a similar idea on the Arduino code. Thus, for the purpose of integrating Google Calendars with Python to our Arduino code, we are going to exclusively look at using Serial to integrate with a python program.__
 
 #### Setting up the Arduino Side
 This section will walk through a simple alarm set up in your Arduino code, however you are more than welcome to integrate your code from earlier in the tutorial.
@@ -595,7 +601,7 @@ bool alarmIsSet = false;
 int alarmTime = 0;
 ```
 
-Once we have these two variables set up, the next thing we have to do is to set up our main control loop. If you are working off the base code, you will have one if-else statement related to displaying the time or temperature in your main control loop. This is content that we still need to keep in our program, and what we need to add is to sit directly after it. There are two checks that we need to perform. The first is that if there is anything currently available in the serial communication channel that we need to read (in other words, a new alarm time). If there is, we need to tell the Arduino side of this project that an alarm is set, and then read what the time is and store that value. The second thing we need to check is that if there is an alarm set, does it need to go off. The code to add to the control loop looks similar to below.
+Once we have these two variables set up, the next thing we have to do is to set up our main control loop. If you are working off the base code, you will have one if-else statement related to displaying the time or temperature in your main control loop. This is content that we need to keep in our program. We need to add our new code directly after it. There are two checks that we need to perform. The first, is there anything currently available on the serial communication channel that we need to read (in other words, a new alarm time). If there is, we need to tell the Arduino side of this project that an alarm needs to be set, read what the time is and store that value. The second thing we need to check is that if there is an alarm set, does it need to be triggered. The code to add to the control loop looks similar to below.
 
 ```c++
 if (Serial.available() > 0) {
@@ -642,9 +648,9 @@ void checkAlarm(){
 }
 ```
 
-With all this code in place, our Arduino side of the program is ready to go. All we have to do now is write the python code to get our serial data. In the mean time, you will notice that by running the program, nothing has changed. The time and temperature are still being displayed.
+With all this code in place, our Arduino side of the alarm clock is ready to go. All we have to do now is write the python code to get our calendar data and send it to the serial port of the Arduino. In the mean time, you will notice that by running the program, nothing has changed. The time and temperature are still being displayed.
 
-#### Getting and Sending the Alarm Details in python
+#### Getting and Sending the Alarm Details On the Raspberry Pi
 
 To make our lives easier, we are going to start this base code from the google tutorial example from when we set up the APIs. There are two different things we need to modify. The first of these is we need to include two additional inputs for the time and calendar library, like below.
 
@@ -653,7 +659,7 @@ import time
 import calendar
 ```
 
-The next part we need to change is the main loop. In the example, the code only ran through once and got the upcoming 10 events. What we want to do is work out when the next alarm should be set based on the upcoming events, and we want to keep running this program forever. Additionally, when we work out what alarm we want to set, we need to send it over serial to the Arduino. Most of the code should look familiar from when you saw and red through the google code. What is different in this tutorials case is the structure and logic to determine whether to set an alarm or not. The code for your main loop should look like what is below.
+The next part we need to change is the main loop. In the example, the code only ran through once and got the upcoming 10 events. What we want to do is work out when the next alarm should be set based on the upcoming events, and we want to keep running this program forever. Additionally, when we work out what alarm we want to set, we need to send it over serial to the Arduino. Most of the code should look familiar from when you saw and red through the google tutorial code from earlier. What is different in this tutorials case is the structure and logic to determine whether to set an alarm or not. The code for your main loop should look like what is below.
 
 ```python
 def main():
@@ -700,12 +706,12 @@ Just like every python script, this needs to be started in terminal using ```pyt
 #### Putting it All Together
 Now that you have everything up and going, it is just a matter of running the two programs at the same time. Start off by getting the Arduino side of the project uploaded to the board. Once that is running, then start the python code running in your terminal.
 
-To test that your alarm clock is indeed working, you need to log into your google calendar and make sure there is an event in your calendar for a few minutes time before you start your python code. Provided you do this for the first time (as this will trigger the first alarm), then your clock is up and running perfectly.
-
-The way that we choose the alarms in the python script will not work for everyone, and there are smarter ways to do this. For example, maybe you actually want to wake up 30 minutes before the event starts, or only have an alarm if the name of the event in your calendar is called "Alarm". It is entirely up to your personal preference what works best for you and you are highly encouraged to experiment!
+To test that your alarm clock is indeed working, you need to log into your google calendar and make sure there is an event in your calendar for a few minutes into the future before you start your python code. Provided you do this first your clock is up and running perfectly.
 
 ## Final Remarks
 Congratulations on building your first smart alarm clock! You now have a device that will wake you up based on your calendar events. Throughout this tutorial you have learned the basics of using electronics, segmented displays, shift registers, real time clock modules, the serial communication protocol and hooking your projects up to the Internet!
+
+The way that we choose the alarms in the python script will not work for everyone, and there are smarter ways to do this. For example, maybe you actually want to wake up 30 minutes before the event starts, or only have an alarm if the name of the event in your calendar is called "Alarm". It is entirely up to your personal preference what works best for you and you are highly encouraged to experiment!
 
 But you shouldn't stop here. There are still many different directions you could take your smart clock. So here are some ideas to get you started. Keep in mind that not all of these future challenges are easy, and some will require more learning about new and different sensors. However, that shouldn't stop the fun!
 
