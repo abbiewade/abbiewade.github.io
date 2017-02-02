@@ -519,7 +519,7 @@ The AlaMode board, pictured below, is essentially an expansion board for the Ras
 
 The best thing about this board is that it has an inbuilt real time clock, which the Raspberry Pi and Arduino don't. Like all electronics, the Alamode also has a datasheet which you can find [here](http://wyolum.com/docs/Alamode/AlaMode_V1datasheet.pdf).
 
-__TODO we will be using the following RP capabilities__
+While the Raspberry Pi has many capabilities, we will only be using it as a computer which can connect to the internet. As such, we will be writing a python script that connects to the internet and uses a serial port to communicate what it finds to the Arduino. 
 
 ### Converting our Simple Clock to the Raspberry Pi
 
@@ -529,9 +529,6 @@ To start this ball rolling, we first need to get the Raspberry Pi and AlaMode bo
 
 ### Connecting our Simple Clock to the Raspberry Pi
 
-__TODO__
-
-### Checking previous old Arduino Code
 As mentioned above, the AlaMode is essentially an Arduino in different clothing. What this means is that your code from the first part of this tutorial will run without a hitch if you move the pins over from your Arduino to the corresponding pins on the AlaMode board. We are going to use this as a perfect opportunity to check that your wiring is the same as the remainder of the tutorials. Please keep in mind that the RTC module and the pressure sensor are not displayed in the pin define section as they are both hooked into the SDA/SCL pins which run the I2C busses. The defined pins that will be used for the remainder of the tutorial are as follows.
 
 ```c++
@@ -588,9 +585,7 @@ void loop() {
 }
 ```
 
-Once you have uploaded this sketch onto your Arduino, open up the serial communication window and type a message to the Arduino. Once you press send, you should see the same message reflected back in the window. In this example, the Arduino is reading data that we manually type to it. But as said earlier, the Arduino is not limited to just this type of communication.
-
-__TODO -- In the upcoming sections, we are going to use a similar idea on the Arduino code. Thus, for the purpose of integrating Google Calendars with Python to our Arduino code, we are going to exclusively look at using Serial to integrate with a python program.__
+Once you have uploaded this sketch onto your Arduino, open up the serial communication window and type a message to the Arduino. Once you press send, you should see the same message reflected back in the window. In this example, the Arduino is reading data that we manually type to it. But as said earlier, the Arduino is not limited to just this type of communication. For the remainder of this tutorial, we are going to exclusively look at using Serial to integrate the Arduino and python code on the Raspberry Pi together.
 
 #### Setting up the Arduino Side
 This section will walk through a simple alarm set up in your Arduino code, however you are more than welcome to integrate your code from earlier in the tutorial.
