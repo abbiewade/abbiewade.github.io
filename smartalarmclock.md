@@ -77,7 +77,7 @@ Different combinations of different segments lit up make different shapes. The t
 | 8     | ||||||||
 | 9     | ||||||||
 
-__TODO explain how the 4 digits work together__
+A 4 digit 7 segment display works exactly the same as a single digit 7 segment display in terms of underlying structure. Every digit has the same segments connected to the same pin. However, every digit is a unique pin. This means that of the 12 pins connected to this component, 8 of them will control the different segments of a digit, and 4 of them are to turn on or off each digit. What this means in terms of programming is that it is easy to write a single number to all of the displays because we just turn all the digit pins on, but it is a little more complex to write different numbers to each display.
 
 #### Build the circuit!
 
@@ -326,7 +326,7 @@ This is a module that provides time and calendar date through the I2C protocol, 
 
 #### I2C Protocol
 
-The Inter-integrated Circuit (I2C) communication protocol is a way for the main Arduino chip to communicate with many sensors connected to the same set of pins. Put simply, this protocol uses a bus to consistently talk to any sensor connected to the I2C ports. This protocol is built as a master-slave design, where the Arduino is the master, and the sensors are the slaves. What happens is the Arduino (Master) begins by sending a start sequence on the I2C bus. The Arduino then requests a data transfer with different sensors (slaves). 
+The Inter-integrated Circuit (I2C) communication protocol is a way for the main Arduino chip to communicate with many sensors connected to the same set of pins. Put simply, this protocol uses a bus to consistently talk to any sensor connected to the I2C ports. This protocol is built as a master-slave design, where the Arduino is the master, and the sensors are the slaves. What happens is the Arduino (Master) begins by sending a start sequence on the I2C bus. The Arduino then requests a data transfer with different sensors (slaves).
 
 To do this transfer of information, I2C uses two wires, a clock signal known as SCL, and a data signal, known as SDA. The SCL line is used to synchronize all data transfers done over the bus. When using the 12C bus instead of declaring pins, you declare addresses, as all sensors connected to the I2C bus will be on the same pins. The [Wire Library](https://www.arduino.cc/en/Reference/Wire) is a standard Arduino library which allows you to communicate with I2C modules in your circuit. It is more than likely that if you have used an I2C sensor before that you have used it.
 
